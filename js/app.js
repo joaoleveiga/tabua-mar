@@ -4,7 +4,7 @@
 const locationSelect = document.getElementById("location");
 const dateInput = document.getElementById("date");
 const resultsDiv = document.getElementById("results");
-const tideTableBody = document.getElementById("tide-table-body");
+const tideForm = document.getElementById("tide-form");
 
 // Initialize the app
 function init() {
@@ -28,6 +28,12 @@ function init() {
   locationSelect.addEventListener("change", calculateAndDisplayTides);
   dateInput.addEventListener("change", calculateAndDisplayTides);
 
+  // Allow form submission via Enter key
+  tideForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+    calculateAndDisplayTides();
+  });
+
   // Calculate initial tides
   calculateAndDisplayTides();
 }
@@ -39,8 +45,12 @@ function calculateAndDisplayTides() {
   
   if (!locationKey || !dateStr) {
     resultsDiv.innerHTML = "<p>Please select a location and date.</p>";
+    resultsDiv.setAttribute('aria-busy', 'false');
     return;
   }
+
+  // Set aria-busy to true while calculating
+  resultsDiv.setAttribute('aria-busy', 'true');
 
   const location = LOCATIONS[locationKey];
   const [year, month, day] = dateStr.split('-').map(Number);
@@ -55,11 +65,13 @@ function calculateAndDisplayTides() {
   
   if (!extremes) {
     resultsDiv.innerHTML = "<p>Error calculating tides.</p>";
+    resultsDiv.setAttribute('aria-busy', 'false');
     return;
   }
 
   // Display results
   displayResults(location, dateStr, extremes);
+  resultsDiv.setAttribute('aria-busy', 'false');
 }
 
 // Display tide results
@@ -69,13 +81,13 @@ function displayResults(location, dateStr, extremes) {
   resultsDiv.innerHTML = `
     <h2>Tide Predictions for ${location.name}</h2>
     <p class="date-display">Date: ${formattedDate}</p>
-    <div class="tide-summary">
-      <div class="tide-card high-tide">
+    <div class="tide-summary" role="region" aria-label="Tide prediction results">
+      <div class="tide-card high-tide" role="region" aria-label="High tide information">
         <h3>High Tide</h3>
         <p class="time">Time: <span>${extremes.high.time}</span></p>
         <p class="height">Height: <span>${extremes.high.height} m</span></p>
       </div>
-      <div class="tide-card low-tide">
+      <div class="tide-card low-tide" role="region" aria-label="Low tide information">
         <h3>Low Tide</h3>
         <p class="time">Time: <span>${extremes.low.time}</span></p>
         <p class="height">Height: <span>${extremes.low.height} m</span></p>

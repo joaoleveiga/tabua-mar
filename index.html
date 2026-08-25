@@ -2,38 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Portugal Coastal Tides - Tide Predictions</title>
     <meta name="description" content="Check coastal tide predictions for Portugal: Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira, Açores.">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>🌊 Portugal Coastal Tides - NUTS II Regions</h1>
-        
-        <div class="controls">
-            <div class="control-group">
-                <label for="location">Location:</label>
-                <select id="location">
-                    <option value="">Select a location...</option>
-                </select>
-            </div>
-            
-            <div class="control-group">
-                <label for="date">Date:</label>
-                <input type="date" id="date" min="2026-08-01">
-            </div>
-        </div>
-        
-        <div id="results">
-            <p>Select a location and date to see tide predictions.</p>
-        </div>
-    </div>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     
-    <footer>
-        <p>Tide predictions based on harmonic constituents (M₂, S₂, K₁, O₁). Data approximated from IH Portugal.</p>
-        <p><a href="privacy.html">Privacy Policy</a> | GPLv3</p>
-    </footer>
+    <div class="container">
+        <header>
+            <h1><span class="wave-emoji" aria-label="Wave">🌊</span> Portugal Coastal Tides - NUTS II Regions</h1>
+        </header>
+        
+        <main id="main-content">
+            <form id="tide-form" aria-label="Tide prediction form">
+                <fieldset class="controls">
+                    <legend class="visually-hidden">Tide Prediction Settings</legend>
+                    
+                    <div class="control-group">
+                        <label for="location">Location:</label>
+                        <select id="location" aria-label="Select a coastal region in Portugal" aria-required="true">
+                            <option value="">Select a location...</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="date">Date:</label>
+                        <input type="date" id="date" min="2026-08-01" aria-label="Select a date for tide prediction" aria-required="true">
+                    </div>
+                </fieldset>
+            </form>
+            
+            <section id="results" aria-live="polite" aria-busy="false">
+                <p>Select a location and date to see tide predictions.</p>
+            </section>
+        </main>
+        
+        <footer>
+            <p>Tide predictions based on harmonic constituents (M₂, S₂, K₁, O₁). Data approximated from IH Portugal.</p>
+            <p><a href="privacy.html">Privacy Policy</a> | GPLv3</p>
+        </footer>
+    </div>
     
     <!-- Load scripts in order -->
     <script src="js/data.js"></script>
