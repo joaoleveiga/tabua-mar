@@ -164,23 +164,23 @@ input[type="date"] {
   background: #f8f9fa;
   font-weight: 600;
   color: #003366;
+}
+
+.tide-table th:nth-child(1),
+.tide-table .tide-type {
   text-align: left;
 }
 
+.tide-table th:nth-child(2),
 .tide-table .tide-time {
   text-align: center;
   font-weight: 600;
 }
 
+.tide-table th:nth-child(3),
 .tide-table .tide-height {
   text-align: right;
   font-weight: 600;
-}
-
-.tide-table .tide-type {
-  font-weight: 600;
-  color: #003366;
-  text-align: left;
 }
 
 .tide-table tr:nth-child(even) {
