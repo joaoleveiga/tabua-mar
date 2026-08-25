@@ -110,6 +110,7 @@ select, input[type="date"] {
   background: white;
   color: #1a1a1a;
   transition: border-color 0.2s, box-shadow 0.2s;
+  max-width: 100%;
 }
 
 select:focus, input[type="date"]:focus {
@@ -123,7 +124,8 @@ select {
 }
 
 input[type="date"] {
-  width: 100%;
+  width: auto;
+  max-width: 100%;
 }
 
 #results {
@@ -303,5 +305,9 @@ input:focus {
   .tide-table td {
     padding: 4px 6px;
     font-size: 0.85em;
+  }
+
+  input[type="date"] {
+    font-size: 0.9em;
   }
 }
