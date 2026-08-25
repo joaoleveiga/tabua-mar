@@ -9,69 +9,53 @@ function degToRad(degrees) {
 }
 
 /**
- * Get hours since epoch for a given date (in Portugal local time)
+ * Get hours since epoch for a given date (in UTC)
  */
 function getHoursSinceEpoch(date) {
-  // Convert to UTC first, then apply timezone offset
-  const utcDate = new Date(date.getTime() - TIMEZONE_OFFSET_HOURS * 60 * 60 * 1000);
-  const diffMs = utcDate.getTime() - EPOCH.getTime();
+  // date is already in UTC
+  const diffMs = date.getTime() - EPOCH.getTime();
   return diffMs / (1000 * 60 * 60); // Convert to hours
-}
-
-/**
- * Calculate the astronomical equilibrium argument for a constituent
- * Simplified version for client-side calculation
- */
-function getAstronomicalArgument(constituent, hoursSinceEpoch) {
-  // For simplicity, we use a basic approximation
-  // In a full implementation, this would use NOAA's X0, V0+u, etc.
-  const period = CONSTITUENTS[constituent].period;
-  const angularSpeed = CONSTITUENTS[constituent].angularSpeed;
-  
-  // Basic approximation: V(t) = (360/period) * t mod 360
-  return (angularSpeed * hoursSinceEpoch) % 360;
 }
 
 /**
  * Calculate tide height at a specific time for a location
  * @param {Object} location - Location data from LOCATIONS
- * @param {Date} date - Date object (local Portugal time)
- * @param {number} hour - Hour of day (0-23, local time)
+ * @param {Date} date - Date object (UTC, at midnight of the day)
+ * @param {number} hour - Hour of day (0-23, local Portugal time which is UTC+1)
  * @param {number} minute - Minute of hour (0-59)
  * @returns {number} Tide height in meters
  */
 function calculateTideHeight(location, date, hour, minute = 0) {
-  // Create a new date with the specified time
+  // Create a copy of the date
   const timeDate = new Date(date);
-  timeDate.setHours(hour, minute, 0, 0);
-  
+  // For local hour H (Portugal UTC+1), we need UTC hour H-1
+  // So we set UTC hours to (hour - 1) to account for the timezone
+  timeDate.setUTCHours(hour - TIMEZONE_OFFSET_HOURS, minute, 0, 0);
+
   const hoursSinceEpoch = getHoursSinceEpoch(timeDate);
-  
+
   let height = location.z0; // Start with mean sea level offset
-  
+
   // Add contribution from each constituent
   for (const constituent of ["m2", "s2", "k1", "o1"]) {
     const amp = location[constituent].amplitude;
     const phase = location[constituent].phase;
     const angularSpeed = CONSTITUENTS[constituent].angularSpeed;
-    
-    // V(t) - astronomical equilibrium argument
-    const V = getAstronomicalArgument(constituent, hoursSinceEpoch);
-    
-    // Total angle in degrees
-    const angle = (angularSpeed * hoursSinceEpoch + phase - V) % 360;
-    
+
+    // Total angle in degrees: omega*t + phase
+    const angle = (angularSpeed * hoursSinceEpoch + phase) % 360;
+
     // Convert to radians and calculate cosine
     height += amp * Math.cos(degToRad(angle));
   }
-  
+
   return height;
 }
 
 /**
  * Calculate tide heights for an entire day at 10-minute intervals
  * @param {Object} location - Location data from LOCATIONS
- * @param {Date} date - Date object (local Portugal time)
+ * @param {Date} date - Date object (UTC, at midnight of the day)
  * @returns {Array} Array of {hour, minute, height} objects
  */
 function getDailyTidePoints(location, date) {
@@ -94,7 +78,7 @@ function getDailyTidePoints(location, date) {
 /**
  * Find high and low tides for a given day
  * @param {Object} location - Location data from LOCATIONS
- * @param {Date} date - Date object (local Portugal time)
+ * @param {Date} date - Date object (UTC, at midnight of the day)
  * @returns {Object} { high: {time, height}, low: {time, height} }
  */
 function getDailyExtremes(location, date) {

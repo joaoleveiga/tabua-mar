@@ -16,8 +16,12 @@ function init() {
     locationSelect.appendChild(option);
   }
 
-  // Set default date to August 1, 2026
-  dateInput.value = "2026-08-01";
+  // Set default date to today or August 1, 2026
+  const today = new Date();
+  const aug1 = new Date("2026-08-01");
+  const defaultDate = today >= aug1 ? today : aug1;
+  const formattedDate = defaultDate.toISOString().split('T')[0];
+  dateInput.value = formattedDate;
   dateInput.min = "2026-08-01";
 
   // Add event listeners
@@ -39,10 +43,13 @@ function calculateAndDisplayTides() {
   }
 
   const location = LOCATIONS[locationKey];
-  const date = new Date(dateStr + "T00:00:00");
+  const [year, month, day] = dateStr.split('-').map(Number);
   
-  // Adjust for Portugal timezone (WEST = UTC+1 for August)
-  date.setHours(date.getHours() + TIMEZONE_OFFSET_HOURS);
+  // Create UTC date at midnight of the selected day
+  // For Portugal local time (UTC+1), midnight local = 23:00 UTC previous day
+  // But we pass this as the base, and calculateTideHeight will add hours in UTC
+  // To get local hour H, we need UTC hour H-1
+  const date = new Date(Date.UTC(year, month - 1, day, 0, 0, 0));
 
   const extremes = getDailyExtremes(location, date);
   

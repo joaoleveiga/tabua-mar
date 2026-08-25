@@ -12,10 +12,10 @@ const LOCATIONS = {
   },
   algarve: {
     name: "Algarve",
-    m2: { amplitude: 1.48, phase: 220 },
-    s2: { amplitude: 0.45, phase: 250 },
-    k1: { amplitude: 0.25, phase: 110 },
-    o1: { amplitude: 0.18, phase: 85 },
+    m2: { amplitude: 1.48, phase: 43.68 },
+    s2: { amplitude: 0.45, phase: 67.50 },
+    k1: { amplitude: 0.25, phase: 18.50 },
+    o1: { amplitude: 0.18, phase: 0.18 },
     z0: 1.20
   },
   alentejo: {
