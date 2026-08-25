@@ -139,56 +139,56 @@ input[type="date"] {
   font-weight: 500;
 }
 
-.tide-summary {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.tide-table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 12px;
 }
 
-.tide-card {
+.tide-table {
+  width: 100%;
+  border-collapse: collapse;
   background: white;
-  border: 2px solid #003366;
+  border: 1px solid #003366;
   border-radius: 6px;
-  padding: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  font-size: 0.95em;
 }
 
-.tide-card h3 {
-  color: #1a1a1a;
-  margin-bottom: 8px;
-  font-size: 1.1em;
+.tide-table th,
+.tide-table td {
+  padding: 8px 12px;
+  border: 1px solid #003366;
+}
+
+.tide-table th {
+  background: #f8f9fa;
+  font-weight: 600;
+  color: #003366;
+  text-align: left;
+}
+
+.tide-table .tide-time {
+  text-align: center;
   font-weight: 600;
 }
 
-.tide-card.high-tide h3 {
+.tide-table .tide-height {
+  text-align: right;
+  font-weight: 600;
+}
+
+.tide-table .tide-type {
+  font-weight: 600;
   color: #003366;
+  text-align: left;
 }
 
-.tide-card.low-tide h3 {
-  color: #8b0000;
+.tide-table tr:nth-child(even) {
+  background: #f8f9fa;
 }
 
-.tide-card .time,
-.tide-card .height {
-  font-size: 1em;
-  margin: 4px 0;
-  line-height: 1.4;
-}
-
-.tide-card .time span,
-.tide-card .height span {
-  font-weight: 700;
-  color: #003366;
-}
-
-.tide-card.high-tide .time span,
-.tide-card.high-tide .height span {
-  color: #003366;
-}
-
-.tide-card.low-tide .time span,
-.tide-card.low-tide .height span {
-  color: #8b0000;
+.tide-table tr:hover {
+  background: #e9ecef;
 }
 
 footer {
@@ -264,20 +264,14 @@ input:focus {
     font-size: 0.95em;
   }
 
-  .tide-summary {
-    gap: 8px;
-  }
-
-  .tide-card {
-    padding: 10px;
-  }
-
-  .tide-card h3 {
-    font-size: 1em;
-  }
-
   .date-display {
     font-size: 1em;
+  }
+
+  .tide-table th,
+  .tide-table td {
+    padding: 6px 8px;
+    font-size: 0.9em;
   }
 
   footer {
@@ -305,7 +299,9 @@ input:focus {
     gap: 8px;
   }
 
-  .tide-card {
-    padding: 8px;
+  .tide-table th,
+  .tide-table td {
+    padding: 4px 6px;
+    font-size: 0.85em;
   }
 }

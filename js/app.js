@@ -78,30 +78,57 @@ function calculateAndDisplayTides() {
 function displayResults(location, dateStr, tidePoints) {
   const formattedDate = formatDate(dateStr);
   
-  // Build HTML for all high tides
-  const highTidesHtml = tidePoints.highs.map((tide, index) => `
-    <div class="tide-card high-tide" role="region" aria-label="High tide ${index + 1} information">
-      <h3>High Tide ${tidePoints.highs.length > 1 ? index + 1 : ''}</h3>
-      <p class="time">Time: <span>${tide.time}</span></p>
-      <p class="height">Height: <span>${tide.height} m</span></p>
-    </div>
-  `).join('');
+  // Combine and sort all tides by time
+  const allTides = [];
+  tidePoints.highs.forEach((tide) => {
+    allTides.push({
+      type: 'High',
+      time: tide.time,
+      height: tide.height,
+      sortTime: tide.time
+    });
+  });
+  tidePoints.lows.forEach((tide) => {
+    allTides.push({
+      type: 'Low',
+      time: tide.time,
+      height: tide.height,
+      sortTime: tide.time
+    });
+  });
   
-  // Build HTML for all low tides
-  const lowTidesHtml = tidePoints.lows.map((tide, index) => `
-    <div class="tide-card low-tide" role="region" aria-label="Low tide ${index + 1} information">
-      <h3>Low Tide ${tidePoints.lows.length > 1 ? index + 1 : ''}</h3>
-      <p class="time">Time: <span>${tide.time}</span></p>
-      <p class="height">Height: <span>${tide.height} m</span></p>
-    </div>
+  // Sort by time ascending
+  allTides.sort((a, b) => {
+    const [aH, aM] = a.sortTime.split(':').map(Number);
+    const [bH, bM] = b.sortTime.split(':').map(Number);
+    return (aH * 60 + aM) - (bH * 60 + bM);
+  });
+  
+  // Build table rows
+  const tableRows = allTides.map(tide => `
+    <tr>
+      <td class="tide-type">${tide.type}</td>
+      <td class="tide-time">${tide.time}</td>
+      <td class="tide-height">${tide.height} m</td>
+    </tr>
   `).join('');
   
   resultsDiv.innerHTML = `
     <h2>Tide Predictions for ${location.name}</h2>
     <p class="date-display">Date: ${formattedDate}</p>
-    <div class="tide-summary" role="region" aria-label="Tide prediction results">
-      ${highTidesHtml}
-      ${lowTidesHtml}
+    <div class="tide-table-container" role="region" aria-label="Tide prediction results">
+      <table class="tide-table">
+        <thead>
+          <tr>
+            <th scope="col">Tide</th>
+            <th scope="col">Hour</th>
+            <th scope="col">Height</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${tableRows}
+        </tbody>
+      </table>
     </div>
   `;
 }
