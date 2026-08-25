@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portugal Coastal Tides - Tide Predictions</title>
+    <meta name="description" content="Check coastal tide predictions for Algarve, Alentejo, and Lisboa in Portugal.">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🌊 Portugal Coastal Tides</h1>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label for="location">Location:</label>
+                <select id="location">
+                    <option value="">Select a location...</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="date">Date:</label>
+                <input type="date" id="date" min="2026-08-01">
+            </div>
+        </div>
+        
+        <div id="results">
+            <p>Select a location and date to see tide predictions.</p>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Tide predictions based on harmonic constituents (M₂, S₂, K₁, O₁). Data approximated from IH Portugal.</p>
+    </footer>
+    
+    <!-- Load scripts in order -->
+    <script src="js/data.js"></script>
+    <script src="js/tide.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
