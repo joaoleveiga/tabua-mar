@@ -1,10 +1,10 @@
 # Portugal Coastal Tides
 
-A simple static website to check tide predictions for Portugal's coastal regions (Algarve, Alentejo, Lisboa) using open-source harmonic tide prediction methods.
+A simple static website to check tide predictions for Portugal's coastal NUTS II regions using open-source harmonic tide prediction methods.
 
 ## Features
 
-- **Locations**: Algarve, Alentejo, Lisboa
+- **Locations**: Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira, Açores
 - **Calendar**: Starting from August 2026
 - **Predictions**: High tide and low tide times with heights
 - **Method**: Harmonic tide prediction using M₂, S₂, K₁, O₁ constituents
@@ -57,7 +57,7 @@ Harmonic constants are approximated from:
 ## Usage
 
 1. Open `index.html` in a web browser
-2. Select a location (Algarve, Alentejo, or Lisboa)
+2. Select a location (Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira, or Açores)
 3. Select a date (starting from August 1, 2026)
 4. View the high and low tide predictions for that day
 
