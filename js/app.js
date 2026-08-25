@@ -61,37 +61,47 @@ function calculateAndDisplayTides() {
   // To get local hour H, we need UTC hour H-1
   const date = new Date(Date.UTC(year, month - 1, day, 0, 0, 0));
 
-  const extremes = getDailyExtremes(location, date);
+  const tidePoints = getAllTidePoints(location, date);
   
-  if (!extremes) {
+  if (!tidePoints || (tidePoints.highs.length === 0 && tidePoints.lows.length === 0)) {
     resultsDiv.innerHTML = "<p>Error calculating tides.</p>";
     resultsDiv.setAttribute('aria-busy', 'false');
     return;
   }
 
   // Display results
-  displayResults(location, dateStr, extremes);
+  displayResults(location, dateStr, tidePoints);
   resultsDiv.setAttribute('aria-busy', 'false');
 }
 
 // Display tide results
-function displayResults(location, dateStr, extremes) {
+function displayResults(location, dateStr, tidePoints) {
   const formattedDate = formatDate(dateStr);
+  
+  // Build HTML for all high tides
+  const highTidesHtml = tidePoints.highs.map((tide, index) => `
+    <div class="tide-card high-tide" role="region" aria-label="High tide ${index + 1} information">
+      <h3>High Tide ${tidePoints.highs.length > 1 ? index + 1 : ''}</h3>
+      <p class="time">Time: <span>${tide.time}</span></p>
+      <p class="height">Height: <span>${tide.height} m</span></p>
+    </div>
+  `).join('');
+  
+  // Build HTML for all low tides
+  const lowTidesHtml = tidePoints.lows.map((tide, index) => `
+    <div class="tide-card low-tide" role="region" aria-label="Low tide ${index + 1} information">
+      <h3>Low Tide ${tidePoints.lows.length > 1 ? index + 1 : ''}</h3>
+      <p class="time">Time: <span>${tide.time}</span></p>
+      <p class="height">Height: <span>${tide.height} m</span></p>
+    </div>
+  `).join('');
   
   resultsDiv.innerHTML = `
     <h2>Tide Predictions for ${location.name}</h2>
     <p class="date-display">Date: ${formattedDate}</p>
     <div class="tide-summary" role="region" aria-label="Tide prediction results">
-      <div class="tide-card high-tide" role="region" aria-label="High tide information">
-        <h3>High Tide</h3>
-        <p class="time">Time: <span>${extremes.high.time}</span></p>
-        <p class="height">Height: <span>${extremes.high.height} m</span></p>
-      </div>
-      <div class="tide-card low-tide" role="region" aria-label="Low tide information">
-        <h3>Low Tide</h3>
-        <p class="time">Time: <span>${extremes.low.time}</span></p>
-        <p class="height">Height: <span>${extremes.low.height} m</span></p>
-      </div>
+      ${highTidesHtml}
+      ${lowTidesHtml}
     </div>
   `;
 }

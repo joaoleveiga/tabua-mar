@@ -76,7 +76,60 @@ function getDailyTidePoints(location, date) {
 }
 
 /**
- * Find high and low tides for a given day
+ * Find all tide turning points (high and low tides) for a given day
+ * @param {Object} location - Location data from LOCATIONS
+ * @param {Date} date - Date object (UTC, at midnight of the day)
+ * @returns {Object} { highs: Array, lows: Array } - Arrays of {time, height} objects sorted chronologically
+ */
+function getAllTidePoints(location, date) {
+  const points = getDailyTidePoints(location, date);
+  
+  if (points.length === 0) {
+    return { highs: [], lows: [] };
+  }
+  
+  // Find all turning points by detecting changes in direction
+  const turningPoints = [];
+  
+  for (let i = 1; i < points.length - 1; i++) {
+    const prev = points[i - 1];
+    const curr = points[i];
+    const next = points[i + 1];
+    
+    // Check if this is a local maximum (high tide)
+    if (curr.height > prev.height && curr.height > next.height) {
+      turningPoints.push({ ...curr, type: 'high' });
+      i++; // Skip next point to avoid duplicate peaks
+    }
+    // Check if this is a local minimum (low tide)
+    else if (curr.height < prev.height && curr.height < next.height) {
+      turningPoints.push({ ...curr, type: 'low' });
+      i++; // Skip next point to avoid duplicate valleys
+    }
+  }
+  
+  // Separate highs and lows and sort by time
+  const highs = turningPoints
+    .filter(p => p.type === 'high')
+    .sort((a, b) => a.hour * 60 + a.minute - (b.hour * 60 + b.minute))
+    .map(p => ({
+      time: formatTime(p.hour, p.minute),
+      height: p.height.toFixed(2)
+    }));
+  
+  const lows = turningPoints
+    .filter(p => p.type === 'low')
+    .sort((a, b) => a.hour * 60 + a.minute - (b.hour * 60 + b.minute))
+    .map(p => ({
+      time: formatTime(p.hour, p.minute),
+      height: p.height.toFixed(2)
+    }));
+  
+  return { highs, lows };
+}
+
+/**
+ * Find high and low tides for a given day (legacy function for backwards compatibility)
  * @param {Object} location - Location data from LOCATIONS
  * @param {Date} date - Date object (UTC, at midnight of the day)
  * @returns {Object} { high: {time, height}, low: {time, height} }
