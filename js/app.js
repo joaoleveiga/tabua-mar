@@ -5,9 +5,29 @@ const locationSelect = document.getElementById("location");
 const dateInput = document.getElementById("date");
 const resultsDiv = document.getElementById("results");
 const tideForm = document.getElementById("tide-form");
+const langSelect = document.getElementById("language");
 
 // Initialize the app
-function init() {
+async function init() {
+  // Initialize translations first
+  await initTranslations();
+  
+  // Update page translations
+  updatePageTranslations();
+  
+  // Set up language picker
+  if (langSelect) {
+    langSelect.value = currentLang;
+    langSelect.addEventListener('change', async (e) => {
+      await setLanguage(e.target.value);
+      updatePageTranslations();
+      // Re-display results if they exist
+      if (locationSelect.value && dateInput.value) {
+        calculateAndDisplayTides();
+      }
+    });
+  }
+
   // Populate location dropdown
   for (const key in LOCATIONS) {
     const option = document.createElement("option");
@@ -44,7 +64,7 @@ function calculateAndDisplayTides() {
   const dateStr = dateInput.value;
   
   if (!locationKey || !dateStr) {
-    resultsDiv.innerHTML = "<p>Please select a location and date.</p>";
+    resultsDiv.innerHTML = `<p>${translate('please_select')}</p>`;
     resultsDiv.setAttribute('aria-busy', 'false');
     return;
   }
@@ -64,7 +84,7 @@ function calculateAndDisplayTides() {
   const tidePoints = getAllTidePoints(location, date);
   
   if (!tidePoints || (tidePoints.highs.length === 0 && tidePoints.lows.length === 0)) {
-    resultsDiv.innerHTML = "<p>Error calculating tides.</p>";
+    resultsDiv.innerHTML = `<p>${translate('error')}</p>`;
     resultsDiv.setAttribute('aria-busy', 'false');
     return;
   }
@@ -82,7 +102,7 @@ function displayResults(location, dateStr, tidePoints) {
   const allTides = [];
   tidePoints.highs.forEach((tide) => {
     allTides.push({
-      type: 'High',
+      type: translate('high'),
       time: tide.time,
       height: tide.height,
       sortTime: tide.time
@@ -90,7 +110,7 @@ function displayResults(location, dateStr, tidePoints) {
   });
   tidePoints.lows.forEach((tide) => {
     allTides.push({
-      type: 'Low',
+      type: translate('low'),
       time: tide.time,
       height: tide.height,
       sortTime: tide.time
@@ -113,16 +133,19 @@ function displayResults(location, dateStr, tidePoints) {
     </tr>
   `).join('');
   
+  const title = translate('tide_predictions', { location: location.name });
+  const dateLabel = translate('date_display');
+  
   resultsDiv.innerHTML = `
-    <h2>Tide Predictions for ${location.name}</h2>
-    <p class="date-display">Date: ${formattedDate}</p>
+    <h2>${title}</h2>
+    <p class="date-display">${dateLabel}: ${formattedDate}</p>
     <div class="tide-table-container" role="region" aria-label="Tide prediction results">
       <table class="tide-table">
         <thead>
           <tr>
-            <th scope="col">Tide</th>
-            <th scope="col">Hour</th>
-            <th scope="col">Height</th>
+            <th scope="col" data-i18n="tide">Tide</th>
+            <th scope="col" data-i18n="hour">Hour</th>
+            <th scope="col" data-i18n="height">Height</th>
           </tr>
         </thead>
         <tbody>
@@ -131,6 +154,15 @@ function displayResults(location, dateStr, tidePoints) {
       </table>
     </div>
   `;
+  
+  // Update table header translations
+  const tableHeaders = resultsDiv.querySelectorAll('th[data-i18n]');
+  tableHeaders.forEach(header => {
+    const key = header.getAttribute('data-i18n');
+    if (key) {
+      header.textContent = translate(key);
+    }
+  });
 }
 
 // Format date as DD/MM/YYYY

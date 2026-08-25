@@ -1,18 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Portugal Coastal Tides - Tide Predictions</title>
+    <title data-i18n="title">Portugal Coastal Tides</title>
     <meta name="description" content="Check coastal tide predictions for Portugal: Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira, Açores.">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <a href="#main-content" class="skip-link" data-i18n="skip_link">Skip to main content</a>
     
     <div class="container">
         <header>
-            <h1><span class="wave-emoji" aria-label="Wave">🌊</span> Portugal Coastal Tides - NUTS II Regions</h1>
+            <div class="language-picker">
+                <label for="language" class="visually-hidden">Select language</label>
+                <select id="language" aria-label="Select language">
+                    <option value="pt_PT">Português</option>
+                    <option value="en_GB">English</option>
+                </select>
+            </div>
+            <h1><span class="wave-emoji" aria-label="Wave">🌊</span> <span data-i18n="title">Portugal Coastal Tides</span> - <span data-i18n="subtitle">NUTS II Regions</span></h1>
         </header>
         
         <main id="main-content">
@@ -21,33 +28,34 @@
                     <legend class="visually-hidden">Tide Prediction Settings</legend>
                     
                     <div class="control-group">
-                        <label for="location">Location:</label>
+                        <label for="location" data-i18n="location_label">Location:</label>
                         <select id="location" aria-label="Select a coastal region in Portugal" aria-required="true">
-                            <option value="">Select a location...</option>
+                            <option value="" data-i18n="select_location">Select a location...</option>
                         </select>
                     </div>
                     
                     <div class="control-group">
-                        <label for="date">Date:</label>
+                        <label for="date" data-i18n="date_label">Date:</label>
                         <input type="date" id="date" min="2026-08-01" aria-label="Select a date for tide prediction" aria-required="true">
                     </div>
                 </fieldset>
             </form>
             
             <section id="results" aria-live="polite" aria-busy="false">
-                <p>Select a location and date to see tide predictions.</p>
+                <p data-i18n="select_prompt">Select a location and date to see tide predictions.</p>
             </section>
         </main>
         
         <footer>
-            <p>Tide predictions based on harmonic constituents (M₂, S₂, K₁, O₁). Data approximated from IH Portugal.</p>
-            <p><a href="privacy.html">Privacy Policy</a> | GPLv3</p>
+            <p data-i18n="predictions_note">Tide predictions based on harmonic constituents (M₂, S₂, K₁, O₁). Data approximated from IH Portugal.</p>
+            <p><a href="privacy.html" data-i18n="privacy_policy">Privacy Policy</a> | <span data-i18n="gplv3">GPLv3</span></p>
         </footer>
     </div>
     
     <!-- Load scripts in order -->
     <script src="js/data.js"></script>
     <script src="js/tide.js"></script>
+    <script src="js/translations.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

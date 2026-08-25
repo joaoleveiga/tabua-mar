@@ -48,6 +48,31 @@ body {
 
 header {
   margin-bottom: 12px;
+  position: relative;
+}
+
+.language-picker {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.language-picker select {
+  padding: 6px 10px;
+  font-size: 0.9em;
+  border: 1px solid #003366;
+  border-radius: 4px;
+  background: white;
+  color: #1a1a1a;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.language-picker select:focus {
+  outline: none;
+  border-color: #003366;
+  box-shadow: 0 0 0 2px rgba(0, 51, 102, 0.3);
 }
 
 header h1 {
@@ -56,6 +81,7 @@ header h1 {
   margin-bottom: 0;
   font-size: 1.4em;
   font-weight: 700;
+  padding-right: 50px;
 }
 
 .wave-emoji {
@@ -244,8 +270,18 @@ input:focus {
     border-radius: 0;
   }
 
+  header {
+    margin-bottom: 8px;
+  }
+
   header h1 {
     font-size: 1.3em;
+    padding-right: 60px;
+  }
+
+  .language-picker select {
+    font-size: 0.85em;
+    padding: 5px 8px;
   }
 
   .controls {
@@ -294,6 +330,12 @@ input:focus {
 
   header h1 {
     font-size: 1.2em;
+    padding-right: 70px;
+  }
+
+  .language-picker select {
+    font-size: 0.8em;
+    padding: 4px 6px;
   }
 
   .controls {
