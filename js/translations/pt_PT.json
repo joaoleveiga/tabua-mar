@@ -15,7 +15,7 @@
   "low": "Baixa-mar",
   "privacy_policy": "Política de Privacidade",
   "gplv3": "GPLv3",
-  "predictions_note": "Previsões de marés baseadas em constituintes harmônicos (M2, S2, K1, O1). Dados aproximados do IH Portugal.",
+  "predictions_note": "Previsões de marés baseadas em constituintes harmónicos (M2, S2, K1, O1). Dados aproximados do IH Portugal.",
   "select_prompt": "Selecionar uma localização e data para ver as previsões de marés.",
   "error": "Erro ao calcular as marés.",
   "please_select": "Por favor, selecione uma localização e data.",
