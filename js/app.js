@@ -90,12 +90,12 @@ function calculateAndDisplayTides() {
   }
 
   // Display results
-  displayResults(location, dateStr, tidePoints);
+  displayResults(location, dateStr, tidePoints, date);
   resultsDiv.setAttribute('aria-busy', 'false');
 }
 
 // Display tide results
-function displayResults(location, dateStr, tidePoints) {
+function displayResults(location, dateStr, tidePoints, date) {
   const formattedDate = formatDate(dateStr);
   
   // Combine and sort all tides by time
@@ -133,6 +133,10 @@ function displayResults(location, dateStr, tidePoints) {
     </tr>
   `).join('');
   
+  // Get moon phase for the selected date
+  const moonPhase = getMoonPhase(date);
+  const moonPhaseLabel = translate('moon_phase');
+  
   const title = translate('tide_predictions', { location: location.name });
   const dateLabel = translate('date_display');
   
@@ -153,6 +157,7 @@ function displayResults(location, dateStr, tidePoints) {
         </tbody>
       </table>
     </div>
+    <p class="moon-phase">${moonPhase.emoji} ${moonPhaseLabel}: ${moonPhase.name}</p>
   `;
   
   // Update table header translations
@@ -169,6 +174,56 @@ function displayResults(location, dateStr, tidePoints) {
 function formatDate(dateStr) {
   const [year, month, day] = dateStr.split("-");
   return `${day}/${month}/${year}`;
+}
+
+// Calculate moon phase for a given date
+// Returns object with phase name and emoji
+function getMoonPhase(date) {
+  // Calculate days since known new moon (2000-01-06 18:14 UTC)
+  const knownNewMoon = new Date(Date.UTC(2000, 0, 6, 18, 14, 0));
+  const diffTime = date.getTime() - knownNewMoon.getTime();
+  const diffDays = diffTime / (1000 * 60 * 60 * 24);
+  
+  // Moon synodic period (new moon to new moon) ~29.530588 days
+  const synodicPeriod = 29.530588;
+  const moonAge = (diffDays % synodicPeriod + synodicPeriod) % synodicPeriod;
+  
+  // Determine phase based on moon age
+  const phaseNames = {
+    pt_PT: [
+      'Lua Nova', 'Lua Crescente', 'Quarto Crescente', 'Lua Gibosa Crescente',
+      'Lua Cheia', 'Lua Gibosa Minguante', 'Quarto Minguante', 'Lua Minguante'
+    ],
+    en_GB: [
+      'New Moon', 'Waxing Crescent', 'First Quarter', 'Waxing Gibbous',
+      'Full Moon', 'Waning Gibbous', 'Last Quarter', 'Waning Crescent'
+    ]
+  };
+  
+  const phaseEmojis = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘'];
+  
+  // Phase boundaries (in days)
+  const boundaries = [0, 3.691, 7.382, 11.074, 14.765, 18.457, 22.148, 25.840, 29.530588];
+  
+  let phaseIndex = 0;
+  for (let i = 0; i < boundaries.length - 1; i++) {
+    if (moonAge >= boundaries[i] && moonAge < boundaries[i + 1]) {
+      phaseIndex = i;
+      break;
+    }
+  }
+  
+  const lang = currentLang || 'pt_PT';
+  const phases = phaseNames[lang] || phaseNames['pt_PT'];
+  const phaseName = phases[phaseIndex] || phases[0];
+  const emoji = phaseEmojis[phaseIndex] || '🌑';
+  
+  return {
+    name: phaseName,
+    emoji: emoji,
+    age: moonAge,
+    phaseIndex: phaseIndex
+  };
 }
 
 // Initialize when DOM is loaded

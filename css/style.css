@@ -219,6 +219,14 @@ input[type="date"] {
   background: #e9ecef;
 }
 
+.moon-phase {
+  text-align: center;
+  margin-top: 12px;
+  color: #4a4a4a;
+  font-size: 0.95em;
+  padding: 8px 0;
+}
+
 footer {
   text-align: center;
   margin-top: 12px;
@@ -312,6 +320,10 @@ input:focus {
     font-size: 0.9em;
   }
 
+  .moon-phase {
+    font-size: 0.9em;
+  }
+
   footer {
     font-size: 0.8em;
     margin-top: 8px;
@@ -346,6 +358,10 @@ input:focus {
   .tide-table th,
   .tide-table td {
     padding: 4px 6px;
+    font-size: 0.85em;
+  }
+
+  .moon-phase {
     font-size: 0.85em;
   }
 
