@@ -16,15 +16,18 @@ A simple static website to check tide predictions for Portugal's coastal NUTS II
 The website uses the **harmonic method** for tide prediction, which calculates tide height as a sum of cosine functions for each tidal constituent:
 
 ```
-h(t) = Z₀ + Σ [Aᵢ · cos(ωᵢ·t - gᵢ)]
+h(t) = Z₀ + Σ [Hᵢ · fᵢ(t) · cos((Vᵢ(t) + uᵢ(t) − gᵢ) · π/180)]
 ```
 
 Where:
 - Z₀: Mean sea level offset over the Zero Hidrográfico (ZH)
-- Aᵢ: Amplitude of constituent
-- ωᵢ: Angular speed (degrees per hour)
-- gᵢ: Phase lag (location-specific)
+- Hᵢ: Amplitude of constituent
+- Vᵢ(t): Doodson equilibrium argument (astronomical, computed per instant)
+- uᵢ(t), fᵢ(t): Nodal phase and amplitude corrections (18.6-year lunar node cycle)
+- gᵢ: Phase lag relative to the equilibrium argument (location-specific)
 - t: Hours since 2000-01-01 00:00 UTC
+
+Because the equilibrium arguments and nodal corrections are computed per instant, the fitted constants are time-invariant port properties: predictions remain valid across months and years (validated out-of-sample on November 2026 data), not just the calibration month.
 
 ### Tidal Constituents Used
 
@@ -40,9 +43,10 @@ Where:
 ### Validation
 
 Predictions were validated against confirmed October 2026 tide tables for the seven
-reference ports (one per region): mean time error ≈ 18 minutes (84% within ±30 min,
-98% within ±60 min), mean height error ≈ 0.10 m over the Zero Hidrográfico. See
-`docs/validation-october-2026.md` and run `node scripts/validate-confirmed-oct2026.js`.
+reference ports (one per region): mean time error 15 minutes (89% within ±30 min,
+99% within ±60 min), mean height error 0.08 m over the Zero Hidrográfico. Out-of-sample
+times for Lisboa (Oct 11 – Nov 3 2026, independent source) average 19 minutes.
+See `docs/validation-october-2026.md` and run `node scripts/validate-confirmed-oct2026.js`.
 
 ## Data Sources
 

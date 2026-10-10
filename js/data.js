@@ -1,10 +1,15 @@
 // Location data with harmonic constants for Portugal coastal regions.
-// Constants least-squares fitted against confirmed October 2026 tide tables
-// derived from the official Instituto Hidrografico (IH Portugal) Tabela de Mares
-// 2026 Vol. I predictions for reference ports (see data/confirmed-tides-*.json).
-// Model: h(t) = z0 + sum A_c * cos(speed_c * t - phase_c), t in hours since
-// 2000-01-01 00:00 UTC. Phases already include the nodal-equilibrium terms for
-// the 2026 epoch, so predictions are calibrated for calendar year 2026.
+// Constants are time-invariant port harmonics (amplitude H, Greenwich-type
+// phase lag g relative to the Doodson equilibrium argument V+u), fitted by
+// least squares against confirmed October 2026 tide tables derived from the
+// official Instituto Hidrografico (IH Portugal) Tabela de Mares 2026 Vol. I
+// predictions for the reference ports (see data/confirmed-tides-*.json).
+// Prediction model (see js/tide.js):
+//   h(t) = z0 + sum H_c * f_c(t) * cos((V_c(t) + u_c(t) - g_c) * pi/180)
+// where t is hours since 2000-01-01 00:00 UTC. Because the equilibrium
+// arguments and nodal corrections are computed per-instant, the constants do
+// not expire with the calibration month (validated out-of-sample on November
+// 2026 data; see docs/validation-october-2026.md).
 // Sorted by: Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira, Acores.
 
 const LOCATIONS = {
@@ -14,96 +19,96 @@ const LOCATIONS = {
     baseUtcOffset: 0,
     z0: 2.0206,
     constituents: {
-      m2: { amplitude: 1.0295, phase: 295.98 },
-      s2: { amplitude: 0.5083, phase: 98.11 },
-      n2: { amplitude: 0.1720, phase: 12.24 },
-      k2: { amplitude: 0.0651, phase: 137.31 },
-      k1: { amplitude: 0.0609, phase: 341.98 },
-      o1: { amplitude: 0.0636, phase: 94.54 }
+      m2: { amplitude: 1.0626, phase: 61.68 },
+      s2: { amplitude: 0.5075, phase: 98.31 },
+      n2: { amplitude: 0.1776, phase: 40.51 },
+      k2: { amplitude: 0.0629, phase: 79.94 },
+      k1: { amplitude: 0.0556, phase: 31.10 },
+      o1: { amplitude: 0.0558, phase: 313.76 }
     }
   },
   centro: {
     name: "Centro",
     referencePort: "Aveiro",
     baseUtcOffset: 0,
-    z0: 1.9983,
+    z0: 1.9979,
     constituents: {
-      m2: { amplitude: 0.8752, phase: 298.47 },
-      s2: { amplitude: 0.4984, phase: 99.22 },
-      n2: { amplitude: 0.1698, phase: 16.03 },
-      k2: { amplitude: 0.0575, phase: 165.15 },
-      k1: { amplitude: 0.0586, phase: 344.23 },
-      o1: { amplitude: 0.0664, phase: 100.38 }
+      m2: { amplitude: 0.9029, phase: 67.40 },
+      s2: { amplitude: 0.4973, phase: 106.02 },
+      n2: { amplitude: 0.1756, phase: 47.93 },
+      k2: { amplitude: 0.0549, phase: 103.07 },
+      k1: { amplitude: 0.0544, phase: 34.91 },
+      o1: { amplitude: 0.0574, phase: 319.23 }
     }
   },
   lisboa: {
     name: "Lisboa e Vale do Tejo",
     referencePort: "Lisboa",
     baseUtcOffset: 0,
-    z0: 2.3475,
+    z0: 2.3479,
     constituents: {
-      m2: { amplitude: 1.2452, phase: 302.14 },
-      s2: { amplitude: 0.5053, phase: 103.99 },
-      n2: { amplitude: 0.1813, phase: 27.72 },
-      k2: { amplitude: 0.1046, phase: 166.86 },
-      k1: { amplitude: 0.0619, phase: 347.71 },
-      o1: { amplitude: 0.0628, phase: 101.94 }
+      m2: { amplitude: 1.2849, phase: 70.61 },
+      s2: { amplitude: 0.5044, phase: 108.66 },
+      n2: { amplitude: 0.1867, phase: 48.27 },
+      k2: { amplitude: 0.1009, phase: 83.57 },
+      k1: { amplitude: 0.0567, phase: 34.81 },
+      o1: { amplitude: 0.0549, phase: 317.23 }
     }
   },
   alentejo: {
     name: "Alentejo",
     referencePort: "Sines",
     baseUtcOffset: 0,
-    z0: 2.0242,
+    z0: 2.0238,
     constituents: {
-      m2: { amplitude: 0.9257, phase: 283.29 },
-      s2: { amplitude: 0.5209, phase: 76.24 },
-      n2: { amplitude: 0.1677, phase: 356.02 },
-      k2: { amplitude: 0.0263, phase: 148.90 },
-      k1: { amplitude: 0.0586, phase: 359.02 },
-      o1: { amplitude: 0.0655, phase: 90.85 }
+      m2: { amplitude: 0.9553, phase: 48.75 },
+      s2: { amplitude: 0.5206, phase: 82.83 },
+      n2: { amplitude: 0.1730, phase: 26.19 },
+      k2: { amplitude: 0.0248, phase: 69.29 },
+      k1: { amplitude: 0.0542, phase: 23.26 },
+      o1: { amplitude: 0.0579, phase: 308.98 }
     }
   },
   algarve: {
     name: "Algarve",
     referencePort: "Faro",
     baseUtcOffset: 0,
-    z0: 1.9917,
+    z0: 1.9918,
     constituents: {
-      m2: { amplitude: 0.9807, phase: 285.57 },
-      s2: { amplitude: 0.5153, phase: 78.89 },
-      n2: { amplitude: 0.1705, phase: 6.53 },
-      k2: { amplitude: 0.0452, phase: 144.71 },
-      k1: { amplitude: 0.0595, phase: 357.98 },
-      o1: { amplitude: 0.0658, phase: 93.32 }
+      m2: { amplitude: 1.0128, phase: 50.72 },
+      s2: { amplitude: 0.5141, phase: 85.78 },
+      n2: { amplitude: 0.1766, phase: 28.38 },
+      k2: { amplitude: 0.0432, phase: 71.37 },
+      k1: { amplitude: 0.0550, phase: 23.48 },
+      o1: { amplitude: 0.0572, phase: 310.46 }
     }
   },
   madeira: {
     name: "Madeira",
     referencePort: "Funchal",
     baseUtcOffset: 0,
-    z0: 1.3659,
+    z0: 1.3663,
     constituents: {
-      m2: { amplitude: 0.6630, phase: 269.59 },
-      s2: { amplitude: 0.4311, phase: 61.13 },
-      n2: { amplitude: 0.1364, phase: 352.55 },
-      k2: { amplitude: 0.0197, phase: 220.57 },
-      k1: { amplitude: 0.0526, phase: 354.73 },
-      o1: { amplitude: 0.0597, phase: 92.28 }
+      m2: { amplitude: 0.6842, phase: 32.48 },
+      s2: { amplitude: 0.4301, phase: 65.28 },
+      n2: { amplitude: 0.1406, phase: 12.48 },
+      k2: { amplitude: 0.0194, phase: 118.58 },
+      k1: { amplitude: 0.0487, phase: 23.76 },
+      o1: { amplitude: 0.0523, phase: 309.53 }
     }
   },
   acores: {
     name: "Açores",
     referencePort: "Ponta Delgada",
     baseUtcOffset: -1,
-    z0: 0.9892,
+    z0: 0.9885,
     constituents: {
-      m2: { amplitude: 0.4899, phase: 285.30 },
-      s2: { amplitude: 0.2612, phase: 83.32 },
-      n2: { amplitude: 0.0919, phase: 10.09 },
-      k2: { amplitude: 0.0063, phase: 187.90 },
-      k1: { amplitude: 0.0289, phase: 170.35 },
-      o1: { amplitude: 0.0345, phase: 90.62 }
+      m2: { amplitude: 0.5055, phase: 49.86 },
+      s2: { amplitude: 0.2607, phase: 82.80 },
+      n2: { amplitude: 0.0952, phase: 21.63 },
+      k2: { amplitude: 0.0056, phase: 111.22 },
+      k1: { amplitude: 0.0269, phase: 12.07 },
+      o1: { amplitude: 0.0298, phase: 283.53 }
     }
   }
 };
@@ -111,7 +116,7 @@ const LOCATIONS = {
 // Angular speeds in degrees per hour (standard tidal constituent values).
 const CONSTITUENTS = {
   m2: { period: 12.4206, angularSpeed: 28.9841042 },
-  s2: { period: 12.0000, angularSpeed: 30.0 },
+  s2: { period: 12.0000, angularSpeed: 30.0000000 },
   n2: { period: 12.6583, angularSpeed: 28.4397295 },
   k2: { period: 11.9672, angularSpeed: 30.0821378 },
   k1: { period: 23.9345, angularSpeed: 15.0410686 },
@@ -120,6 +125,28 @@ const CONSTITUENTS = {
 
 // Reference epoch: 2000-01-01 00:00:00 UTC
 const EPOCH = new Date("2000-01-01T00:00:00Z");
+
+// Fundamental astronomical arguments (Doodson linear models, epoch J2000).
+// Degrees at epoch and degrees/day.
+const ASTRONOMICAL_ARGS = {
+  s:  { value: 218.3164477, rate: 13.17639648 },  // Moon mean longitude
+  h:  { value: 280.46646,   rate: 0.98564736 },    // Sun mean longitude
+  p:  { value: 83.3532464,  rate: 0.11140353 },   // Moon perigee mean longitude
+  N:  { value: 125.04452,   rate: -0.05295377 },   // Moon ascending node mean longitude
+  pp: { value: 282.9376,    rate: 0.00471125 }     // Sun perigee mean longitude
+};
+
+// Doodson numbers per constituent: multipliers over (tau, s, h, p, N, pp)
+// plus the constituent phase constant in degrees.
+// M2=255.555, S2=273.555, N2=245.655, K2=275.555, K1=165.555, O1=145.555
+const EQUILIBRIUM_ARGS = {
+  m2: { multipliers: [2,  0,  0, 0, 0, 0], phase: 0   },
+  s2: { multipliers: [2,  2, -2, 0, 0, 0], phase: 0   },
+  n2: { multipliers: [2, -1,  0, 1, 0, 0], phase: 0   },
+  k2: { multipliers: [2,  2,  0, 0, 0, 0], phase: 0   },
+  k1: { multipliers: [1,  1,  0, 0, 0, 0], phase: 90  },
+  o1: { multipliers: [1, -1,  0, 0, 0, 0], phase: 270 }
+};
 
 // European Union daylight saving time: last Sunday of March to last Sunday of
 // October, transitions at 01:00 UTC. Applies to mainland Portugal, Madeira

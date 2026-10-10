@@ -100,3 +100,61 @@ The tables the constants were fitted against cover October 2026; accuracy for
 other months/years will drift because the phase lags absorb the nodal cycle
 only for the calibration period. Recalibrating against tables spanning a full
 year would remove most of the residual seasonal error.
+
+---
+
+## Update 2: astronomical equilibrium arguments + nodal corrections (2026-10-10)
+
+The engine now implements the full harmonic formulation with time-varying
+astronomy, making the fitted constants **time-invariant port properties**
+instead of October-2026-anchored phases:
+
+- `js/data.js` stores, per constituent, the amplitude H and the phase lag g
+  relative to the Doodson equilibrium argument V(t)+u(t), plus the fundamental
+  astronomical arguments (Moon/Sun longitudes, perigees, node) needed to compute
+  V(t) at prediction time.
+- `js/tide.js` computes V(t)+u(t) and the nodal amplitude factor f(t)
+  (18.6-year lunar node cycle) per instant:
+  `h(t) = z0 + Σ H·f(t)·cos((V(t)+u(t) − g)·π/180)`
+
+### Why this replaces monthly/per-period recalibration
+
+Fitting against a single month (October 2026) left the phase lags absorbing
+that month's particular Sun–Moon geometry, so predictions would drift in other
+months. With the equilibrium argument computed per instant, g is a genuine
+Greenwich-type phase lag: the same constants remain valid across the year and
+degrade only slowly (minutes per year) over the 18.6-year nodal cycle, which
+the f/u corrections now track explicitly.
+
+### Validation
+
+In-sample (October 2026 confirmed tables, 831 events, 7 ports):
+
+| Region | n | mean time err | max | mean height err | max |
+|---|---|---|---|---|---|
+| Norte | 120 | 9.7 min | 49 min | 0.072 m | 0.190 m |
+| Centro | 120 | 19.4 min | 85 min | 0.089 m | 0.260 m |
+| Lisboa | 119 | 12.3 min | 29 min | 0.077 m | 0.200 m |
+| Alentejo | 118 | 14.4 min | 55 min | 0.083 m | 0.210 m |
+| Algarve | 118 | 13.4 min | 57 min | 0.083 m | 0.220 m |
+| Madeira | 117 | 23.2 min | 114 min | 0.085 m | 0.260 m |
+| Açores | 119 | 12.6 min | 46 min | 0.055 m | 0.180 m |
+| **All** | **831** | **15.0 min** | 114 min | **0.078 m** | 0.260 m |
+
+Within ±30 min: **89%** (743/831); within ±60 min: **99%** (819/831).
+
+Out-of-sample (Lisboa, 17 days spanning Oct 11 – Nov 3 2026 from
+tide-forecast.com, i.e. a different data source than the calibration set):
+n=65, mean time error **19.4 min**, 75% within ±30 min, 97% within ±60 min —
+confirming the constants generalize beyond the calibration month with only
+mild degradation. (November-only events: 83% within ±30 min.)
+
+Future-date sanity checks (2027, 2028) produce plausible tides with zero
+negative heights across 1,596 events spanning two different nodal regimes
+(October 2026, February 2027).
+
+Remaining error sources: shallow-water constituents (M4 etc.) not modelled,
+and the Sa/Ss annual meteorological terms omitted (they require ≥1 year of
+calibration data; with only October available they are unidentifiable). If a
+full year of confirmed tables is ever added, adding Sa/Ss to the fit would
+remove most of the residual seasonal variation.

@@ -1,15 +1,81 @@
 // Harmonic tide prediction engine.
 // Uses the harmonic method with M2, S2, N2, K2, K1 and O1 constituents:
-//   h(t) = Z0 + sum [ A_i * cos(w_i * t - g_i) ]
-// where t is hours since the epoch (2000-01-01 00:00 UTC), A_i the amplitude,
-// w_i the angular speed and g_i the phase lag of each constituent.
-// Heights are meters above the local Zero Hidrografico (ZH).
+//   h(t) = Z0 + sum [ H_i * f_i(t) * cos((V_i(t) + u_i(t) - g_i) * pi/180) ]
+// where t is hours since the epoch (2000-01-01 00:00 UTC), H_i the amplitude,
+// g_i the phase lag relative to the equilibrium argument, V_i(t) the Doodson
+// equilibrium argument, and f_i(t)/u_i(t) the nodal amplitude and phase
+// corrections (18.6-year lunar node cycle). Heights are meters above the
+// local Zero Hidrografico (ZH).
 
 const DEG_TO_RAD = Math.PI / 180;
 
 // Hours since epoch for a UTC date
 function getHoursSinceEpoch(date) {
   return (date.getTime() - EPOCH.getTime()) / 3600000;
+}
+
+// Compute the fundamental astronomical arguments (degrees) at t hours since
+// the epoch, including the mean lunar time angle tau.
+function astronomicalArgs(tHours) {
+  const days = tHours / 24;
+  const args = {};
+  for (const key in ASTRONOMICAL_ARGS) {
+    const a = ASTRONOMICAL_ARGS[key];
+    args[key] = (a.value + a.rate * days) % 360;
+  }
+  // mean lunar time angle: tau = 15*t - s + h (t in mean solar hours)
+  args.tau = (15 * tHours - args.s + args.h) % 360;
+  return args;
+}
+
+// Equilibrium argument V(t) + nodal phase correction u(t), in degrees.
+function equilibriumArg(constituent, tHours) {
+  const args = astronomicalArgs(tHours);
+  const spec = EQUILIBRIUM_ARGS[constituent];
+  const keys = ['tau', 's', 'h', 'p', 'N', 'pp'];
+  let arg = 0;
+  for (let i = 0; i < keys.length; i++) {
+    arg += spec.multipliers[i] * args[keys[i]];
+  }
+  // nodal phase corrections u (leading Doodson terms, degrees)
+  const N = args.N * DEG_TO_RAD;
+  switch (constituent) {
+    case 'm2':
+    case 'n2':
+      arg += -2.14 * Math.sin(N);
+      break;
+    case 'k2':
+      arg += -1.28 * Math.sin(2 * N) - 0.31 * Math.sin(N);
+      break;
+    case 'k1':
+      arg += -0.086 * Math.sin(N) + 0.018 * Math.sin(2 * N);
+      break;
+    case 'o1':
+      arg += 0.108 * Math.sin(N) + 0.024 * Math.sin(2 * N);
+      break;
+  }
+  return (arg + spec.phase) % 360;
+}
+
+// Nodal amplitude factor f(t).
+function nodalAmplitudeFactor(constituent, tHours) {
+  const args = astronomicalArgs(tHours);
+  const N = args.N * DEG_TO_RAD;
+  switch (constituent) {
+    case 'm2':
+    case 'n2':
+      return 1.000 - 0.0373 * Math.cos(N);
+    case 's2':
+      return 1.000;
+    case 'k2':
+      return 1.000 + 0.0282 * Math.cos(2 * N) + 0.0310 * Math.cos(N);
+    case 'k1':
+      return 1.000 + 0.1154 * Math.cos(N) - 0.0158 * Math.cos(2 * N);
+    case 'o1':
+      return 1.000 + 0.1884 * Math.cos(N) - 0.0242 * Math.cos(2 * N);
+    default:
+      return 1.0;
+  }
 }
 
 // Convert a local wall-clock time (year, month, day, hour, minute) in the
@@ -39,10 +105,10 @@ function utcToLocal(location, utcMs) {
 function calculateTideHeight(location, utcDate) {
   const t = getHoursSinceEpoch(utcDate);
   let height = location.z0;
-  for (const key in location.constituents) {
-    const constituent = location.constituents[key];
-    const speed = CONSTITUENTS[key].angularSpeed;
-    height += constituent.amplitude * Math.cos((speed * t - constituent.phase) * DEG_TO_RAD);
+  for (const constituent in location.constituents) {
+    const spec = location.constituents[constituent];
+    const angle = equilibriumArg(constituent, t) - spec.phase;
+    height += spec.amplitude * nodalAmplitudeFactor(constituent, t) * Math.cos(angle * DEG_TO_RAD);
   }
   return height;
 }
