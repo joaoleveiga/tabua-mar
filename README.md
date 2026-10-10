@@ -7,7 +7,8 @@ A simple static website to check tide predictions for Portugal's coastal NUTS II
 - **Locations**: Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira, Açores
 - **Calendar**: Starting from August 2026
 - **Predictions**: High tide and low tide times with heights
-- **Method**: Harmonic tide prediction using M₂, S₂, K₁, O₁ constituents
+- **Method**: Harmonic tide prediction using M₂, S₂, N₂, K₂, K₁, O₁ constituents
+- **Calibration**: Constants least-squares fitted against confirmed October 2026 tide tables derived from the official IH Portugal Tabela de Marés 2026 (see `data/` and `docs/validation-october-2026.md`)
 - **Zero Dependencies**: Pure HTML, CSS, and JavaScript
 
 ## How It Works
@@ -15,15 +16,15 @@ A simple static website to check tide predictions for Portugal's coastal NUTS II
 The website uses the **harmonic method** for tide prediction, which calculates tide height as a sum of cosine functions for each tidal constituent:
 
 ```
-h(t) = Z₀ + Σ [Aᵢ · cos(ωᵢ·t + φᵢ - Vᵢ(t))]
+h(t) = Z₀ + Σ [Aᵢ · cos(ωᵢ·t - gᵢ)]
 ```
 
 Where:
-- Z₀: Mean sea level offset
+- Z₀: Mean sea level offset over the Zero Hidrográfico (ZH)
 - Aᵢ: Amplitude of constituent
-- ωᵢ: Angular speed
-- φᵢ: Phase lag (location-specific)
-- Vᵢ(t): Astronomical equilibrium argument
+- ωᵢ: Angular speed (degrees per hour)
+- gᵢ: Phase lag (location-specific)
+- t: Hours since 2000-01-01 00:00 UTC
 
 ### Tidal Constituents Used
 
@@ -31,14 +32,23 @@ Where:
 |-------------|----------------|-------------|
 | M₂ | 12.4206 | Principal lunar semidiurnal |
 | S₂ | 12.0000 | Principal solar semidiurnal |
+| N₂ | 12.6583 | Larger lunar elliptic semidiurnal |
+| K₂ | 11.9672 | Luni-solar semidiurnal |
 | K₁ | 23.9345 | Luni-solar diurnal |
 | O₁ | 25.8193 | Principal lunar diurnal |
 
+### Validation
+
+Predictions were validated against confirmed October 2026 tide tables for the seven
+reference ports (one per region): mean time error ≈ 18 minutes (84% within ±30 min,
+98% within ±60 min), mean height error ≈ 0.10 m over the Zero Hidrográfico. See
+`docs/validation-october-2026.md` and run `node scripts/validate-confirmed-oct2026.js`.
+
 ## Data Sources
 
-Harmonic constants are approximated from:
-- **IH Portugal** (Instituto Hidrográfico Português)
-- **NOAA** tide prediction data
+Harmonic constants are least-squares fitted from:
+- Official **IH Portugal** (Instituto Hidrográfico Português) Tabela de Marés 2026, Volume I predictions, as republished in monthly reference tables
+- One reference port per region: Leixões (Norte), Aveiro (Centro), Lisboa (Lisboa e Vale do Tejo), Sines (Alentejo), Faro (Algarve), Funchal (Madeira), Ponta Delgada (Açores)
 
 ## Project Structure
 

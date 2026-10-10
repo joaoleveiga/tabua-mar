@@ -1,173 +1,120 @@
-// Harmonic tide prediction engine
-// Uses open-source harmonic method with M2, S2, K1, O1 constituents
+// Harmonic tide prediction engine.
+// Uses the harmonic method with M2, S2, N2, K2, K1 and O1 constituents:
+//   h(t) = Z0 + sum [ A_i * cos(w_i * t - g_i) ]
+// where t is hours since the epoch (2000-01-01 00:00 UTC), A_i the amplitude,
+// w_i the angular speed and g_i the phase lag of each constituent.
+// Heights are meters above the local Zero Hidrografico (ZH).
 
-/**
- * Convert degrees to radians
- */
-function degToRad(degrees) {
-  return degrees * Math.PI / 180;
-}
+const DEG_TO_RAD = Math.PI / 180;
 
-/**
- * Get hours since epoch for a given date (in UTC)
- */
+// Hours since epoch for a UTC date
 function getHoursSinceEpoch(date) {
-  // date is already in UTC
-  const diffMs = date.getTime() - EPOCH.getTime();
-  return diffMs / (1000 * 60 * 60); // Convert to hours
+  return (date.getTime() - EPOCH.getTime()) / 3600000;
 }
 
-/**
- * Calculate tide height at a specific time for a location
- * @param {Object} location - Location data from LOCATIONS
- * @param {Date} date - Date object (UTC, at midnight of the day)
- * @param {number} hour - Hour of day (0-23, local Portugal time which is UTC+1)
- * @param {number} minute - Minute of hour (0-59)
- * @returns {number} Tide height in meters
- */
-function calculateTideHeight(location, date, hour, minute = 0) {
-  // Create a copy of the date
-  const timeDate = new Date(date);
-  // For local hour H (Portugal UTC+1), we need UTC hour H-1
-  // So we set UTC hours to (hour - 1) to account for the timezone
-  timeDate.setUTCHours(hour - TIMEZONE_OFFSET_HOURS, minute, 0, 0);
-
-  const hoursSinceEpoch = getHoursSinceEpoch(timeDate);
-
-  let height = location.z0; // Start with mean sea level offset
-
-  // Add contribution from each constituent
-  for (const constituent of ["m2", "s2", "k1", "o1"]) {
-    const amp = location[constituent].amplitude;
-    const phase = location[constituent].phase;
-    const angularSpeed = CONSTITUENTS[constituent].angularSpeed;
-
-    // Total angle in degrees: omega*t + phase
-    const angle = (angularSpeed * hoursSinceEpoch + phase) % 360;
-
-    // Convert to radians and calculate cosine
-    height += amp * Math.cos(degToRad(angle));
-  }
-
-  return height;
+// Convert a local wall-clock time (year, month, day, hour, minute) in the
+// location's time zone into a UTC Date, accounting for DST transitions.
+function localToUtc(location, year, month, day, hour, minute) {
+  // Approximate first with the standard offset, then correct for DST.
+  const standard = Date.UTC(year, month - 1, day, hour, minute) - location.baseUtcOffset * 3600000;
+  const offset = localOffsetHours(location, standard);
+  return new Date(standard - (offset - location.baseUtcOffset) * 3600000);
 }
 
-/**
- * Calculate tide heights for an entire day at 10-minute intervals
- * @param {Object} location - Location data from LOCATIONS
- * @param {Date} date - Date object (UTC, at midnight of the day)
- * @returns {Array} Array of {hour, minute, height} objects
- */
-function getDailyTidePoints(location, date) {
-  const points = [];
-  
-  for (let hour = 0; hour < 24; hour++) {
-    for (let minute = 0; minute < 60; minute += 10) {
-      const height = calculateTideHeight(location, date, hour, minute);
-      points.push({
-        hour: hour,
-        minute: minute,
-        height: height
-      });
-    }
-  }
-  
-  return points;
-}
-
-/**
- * Find all tide turning points (high and low tides) for a given day
- * @param {Object} location - Location data from LOCATIONS
- * @param {Date} date - Date object (UTC, at midnight of the day)
- * @returns {Object} { highs: Array, lows: Array } - Arrays of {time, height} objects sorted chronologically
- */
-function getAllTidePoints(location, date) {
-  const points = getDailyTidePoints(location, date);
-  
-  if (points.length === 0) {
-    return { highs: [], lows: [] };
-  }
-  
-  // Find all turning points by detecting changes in direction
-  const turningPoints = [];
-  
-  for (let i = 1; i < points.length - 1; i++) {
-    const prev = points[i - 1];
-    const curr = points[i];
-    const next = points[i + 1];
-    
-    // Check if this is a local maximum (high tide)
-    if (curr.height > prev.height && curr.height > next.height) {
-      turningPoints.push({ ...curr, type: 'high' });
-      i++; // Skip next point to avoid duplicate peaks
-    }
-    // Check if this is a local minimum (low tide)
-    else if (curr.height < prev.height && curr.height < next.height) {
-      turningPoints.push({ ...curr, type: 'low' });
-      i++; // Skip next point to avoid duplicate valleys
-    }
-  }
-  
-  // Separate highs and lows and sort by time
-  const highs = turningPoints
-    .filter(p => p.type === 'high')
-    .sort((a, b) => a.hour * 60 + a.minute - (b.hour * 60 + b.minute))
-    .map(p => ({
-      time: formatTime(p.hour, p.minute),
-      height: p.height.toFixed(2)
-    }));
-  
-  const lows = turningPoints
-    .filter(p => p.type === 'low')
-    .sort((a, b) => a.hour * 60 + a.minute - (b.hour * 60 + b.minute))
-    .map(p => ({
-      time: formatTime(p.hour, p.minute),
-      height: p.height.toFixed(2)
-    }));
-  
-  return { highs, lows };
-}
-
-/**
- * Find high and low tides for a given day (legacy function for backwards compatibility)
- * @param {Object} location - Location data from LOCATIONS
- * @param {Date} date - Date object (UTC, at midnight of the day)
- * @returns {Object} { high: {time, height}, low: {time, height} }
- */
-function getDailyExtremes(location, date) {
-  const points = getDailyTidePoints(location, date);
-  
-  if (points.length === 0) {
-    return null;
-  }
-  
-  let high = points[0];
-  let low = points[0];
-  
-  for (const point of points) {
-    if (point.height > high.height) {
-      high = point;
-    }
-    if (point.height < low.height) {
-      low = point;
-    }
-  }
-  
+// Convert a UTC instant into local wall-clock components in the location's
+// time zone, accounting for DST transitions.
+function utcToLocal(location, utcMs) {
+  const offset = localOffsetHours(location, utcMs);
+  const shifted = new Date(utcMs + offset * 3600000);
   return {
-    high: {
-      time: formatTime(high.hour, high.minute),
-      height: high.height.toFixed(2)
-    },
-    low: {
-      time: formatTime(low.hour, low.minute),
-      height: low.height.toFixed(2)
-    }
+    year: shifted.getUTCFullYear(),
+    month: shifted.getUTCMonth() + 1,
+    day: shifted.getUTCDate(),
+    hour: shifted.getUTCHours(),
+    minute: shifted.getUTCMinutes()
   };
 }
 
-/**
- * Format time as HH:MM
- */
+// Calculate tide height at a specific UTC time for a location
+function calculateTideHeight(location, utcDate) {
+  const t = getHoursSinceEpoch(utcDate);
+  let height = location.z0;
+  for (const key in location.constituents) {
+    const constituent = location.constituents[key];
+    const speed = CONSTITUENTS[key].angularSpeed;
+    height += constituent.amplitude * Math.cos((speed * t - constituent.phase) * DEG_TO_RAD);
+  }
+  return height;
+}
+
+// Find all tide turning points (high and low tides) for a given local day.
+// Scans from noon the previous day to noon the next day (UTC-anchored) so
+// extrema near midnight are never missed, then keeps events whose local date
+// matches the requested day.
+function getAllTidePoints(location, year, month, day) {
+  const dayStartUtc = localToUtc(location, year, month, day, 0, 0).getTime();
+  const dayEndUtc = localToUtc(location, year, month, day + 1, 0, 0).getTime();
+  const scanStart = dayStartUtc - 13 * 3600000;
+  const scanEnd = dayEndUtc + 13 * 3600000;
+
+  const events = [];
+  const stepMs = 10 * 60 * 1000;
+  let prevTime = null;
+  let prevHeight = null;
+  let rising = null;
+
+  for (let t = scanStart; t <= scanEnd; t += stepMs) {
+    const height = calculateTideHeight(location, new Date(t));
+    if (prevTime !== null) {
+      const dir = height > prevHeight ? 1 : -1;
+      if (rising !== null && dir !== rising) {
+        const extremeTime = refineExtremum(location, prevTime, t, rising === 1 ? 'high' : 'low');
+        if (extremeTime.utcMs >= dayStartUtc && extremeTime.utcMs < dayEndUtc) {
+          events.push(extremeTime);
+        }
+      }
+      rising = dir;
+    }
+    prevTime = t;
+    prevHeight = height;
+  }
+
+  events.sort((a, b) => a.utcMs - b.utcMs);
+  const highs = events.filter(e => e.type === 'high');
+  const lows = events.filter(e => e.type === 'low');
+
+  return {
+    highs: highs.map(e => ({ time: e.time, height: e.height.toFixed(2) })),
+    lows: lows.map(e => ({ time: e.time, height: e.height.toFixed(2) }))
+  };
+}
+
+// Quadratic interpolation around a detected turning point to pin down its
+// exact time and height (the scan grid is 10 minutes wide).
+function refineExtremum(location, beforeMs, afterMs, type) {
+  const midMs = (beforeMs + afterMs) / 2;
+  const step = 60 * 1000;
+  let bestTime = midMs;
+  let bestHeight = calculateTideHeight(location, new Date(midMs));
+  const from = beforeMs - 2 * step;
+  const to = afterMs + 2 * step;
+  for (let t = from; t <= to; t += step) {
+    const h = calculateTideHeight(location, new Date(t));
+    if ((type === 'high' && h > bestHeight) || (type === 'low' && h < bestHeight)) {
+      bestHeight = h;
+      bestTime = t;
+    }
+  }
+  const local = utcToLocal(location, bestTime);
+  return {
+    utcMs: bestTime,
+    time: formatTime(local.hour, local.minute),
+    height: bestHeight,
+    type: type
+  };
+}
+
+// Format time as HH:MM
 function formatTime(hour, minute) {
   const h = String(hour).padStart(2, '0');
   const m = String(minute).padStart(2, '0');

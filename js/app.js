@@ -74,14 +74,9 @@ function calculateAndDisplayTides() {
 
   const location = LOCATIONS[locationKey];
   const [year, month, day] = dateStr.split('-').map(Number);
-  
-  // Create UTC date at midnight of the selected day
-  // For Portugal local time (UTC+1), midnight local = 23:00 UTC previous day
-  // But we pass this as the base, and calculateTideHeight will add hours in UTC
-  // To get local hour H, we need UTC hour H-1
-  const date = new Date(Date.UTC(year, month - 1, day, 0, 0, 0));
 
-  const tidePoints = getAllTidePoints(location, date);
+  // Calculate tides for the selected local day
+  const tidePoints = getAllTidePoints(location, year, month, day);
   
   if (!tidePoints || (tidePoints.highs.length === 0 && tidePoints.lows.length === 0)) {
     resultsDiv.innerHTML = `<p>${translate('error')}</p>`;
@@ -90,7 +85,7 @@ function calculateAndDisplayTides() {
   }
 
   // Display results
-  displayResults(location, dateStr, tidePoints, date);
+  displayResults(location, dateStr, tidePoints, new Date(Date.UTC(year, month - 1, day)));
   resultsDiv.setAttribute('aria-busy', 'false');
 }
 

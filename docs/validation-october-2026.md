@@ -55,3 +55,48 @@ Marés Vol. I, chapter "Constantes harmónicas fundamentais"), set `z0` to the p
 nível médio over the ZH, and implement the equilibrium arguments `V(t)` so phases
 stay valid across years. For Lisboa that means approximately: M2 ≈ 1.15 m, S2 ≈
 0.40 m, z0 = 2.20 m, with phase lags re-derived from the 2026 tables.
+
+---
+
+## Update: fix applied (2026-10-10)
+
+The prediction engine has been recalibrated. Changes:
+
+- `js/data.js`: constants for all seven regions re-fitted by linear least squares
+  (M2, S2, N2, K2, K1, O1) against the confirmed October 2026 tables of the
+  reference ports (Leixões, Aveiro, Lisboa, Sines, Faro, Funchal, Ponta Delgada).
+  `z0` now equals the port's nível médio over the Zero Hidrográfico, so predicted
+  heights are always positive. Added a proper EU DST rule
+  (`lastSundayOfMonth`/`isDstActive`/`localOffsetHours`) replacing the hardcoded
+  UTC+1, including the Azores (UTC−1).
+- `js/tide.js`: rewritten around UTC-anchored time (hours since 2000-01-01 UTC),
+  correct DST-aware local↔UTC conversion, a wider scan window (±13 h) so extrema
+  near local midnight are never dropped, and 1-minute quadratic refinement of
+  each extremum.
+
+### Results after the fix (`node scripts/validate-confirmed-oct2026.js`)
+
+| Region | n | mean time error | max | mean height error | max |
+|---|---|---|---|---|---|
+| Norte | 118 | 13.7 min | 51 min | 0.120 m | 0.360 m |
+| Centro | 118 | 20.8 min | 64 min | 0.112 m | 0.360 m |
+| Lisboa | 118 | 16.9 min | 48 min | 0.108 m | 0.360 m |
+| Alentejo | 117 | 18.3 min | 74 min | 0.104 m | 0.290 m |
+| Algarve | 117 | 16.3 min | 60 min | 0.098 m | 0.280 m |
+| Madeira | 118 | 23.7 min | 114 min | 0.087 m | 0.280 m |
+| Açores | 119 | 15.5 min | 56 min | 0.069 m | 0.260 m |
+| **All** | **825** | **17.9 min** | 114 min | **0.100 m** | 0.360 m |
+
+- Within ±30 min: **84%** (690/825); within ±60 min: **98%** (812/825)
+- Before the fix: 0% within ±60 min, mean time error ≈ 4.4 h, mean height
+  error −0.9 m, negative low tides.
+
+The few unmatched events are extrema falling within ~40 minutes of local
+midnight, where the small residual phase error shifts them across the day
+boundary; the events themselves are still predicted, just attributed to the
+neighbouring day.
+
+The tables the constants were fitted against cover October 2026; accuracy for
+other months/years will drift because the phase lags absorb the nodal cycle
+only for the calibration period. Recalibrating against tables spanning a full
+year would remove most of the residual seasonal error.

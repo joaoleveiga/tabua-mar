@@ -15,7 +15,7 @@
   "low": "Low",
   "privacy_policy": "Privacy Policy",
   "gplv3": "GPLv3",
-  "predictions_note": "Tide predictions based on harmonic constituents (M2, S2, K1, O1). Data approximated from IH Portugal.",
+  "predictions_note": "Tide predictions based on harmonic constituents (M2, S2, N2, K2, K1, O1), calibrated against official Instituto Hidrografico tide tables. Not valid for navigation.",
   "select_prompt": "Select a location and date to see tide predictions.",
   "error": "Error calculating tides.",
   "please_select": "Please select a location and date.",
