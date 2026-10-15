@@ -369,3 +369,38 @@ input:focus {
     font-size: 0.9em;
   }
 }
+
+.intro {
+  margin: 0 0 1em 0;
+  font-size: 0.95em;
+  line-height: 1.5;
+}
+
+.regions-section,
+.info-section {
+  margin-top: 2em;
+}
+
+.regions-section h2,
+.info-section h2 {
+  font-size: 1.1em;
+}
+
+.info-section h3 {
+  font-size: 1em;
+  margin-bottom: 0.3em;
+}
+
+.info-section h3 + p {
+  margin-top: 0;
+}
+
+.regions-list {
+  margin: 0.5em 0 0 1.2em;
+  padding: 0;
+}
+
+.regions-list li {
+  margin: 0.25em 0;
+  line-height: 1.4;
+}

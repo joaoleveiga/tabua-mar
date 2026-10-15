@@ -1,7 +1,7 @@
 {
   "lang_name": "English (UK)",
   "lang_code": "en_GB",
-  "title": "Portugal Coastal Tides",
+  "title": "Portugal Coastal Tides — Tide Table & Predictions",
   "subtitle": "NUTS II Regions",
   "location_label": "Location:",
   "date_label": "Date:",
@@ -37,5 +37,19 @@
   "privacy_contact": "This is an open source project available at {githubLink}.",
   "august_2026": "August 2026",
   "github_url": "https://github.com/joaoleveiga/tabua-mar",
-  "moon_phase": "Moon Phase"
+  "moon_phase": "Moon Phase",
+  "meta_description": "Coastal tide predictions for Portugal: Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira and Açores. High and low tide times with heights in metres, month by month.",
+  "intro_text": "Check tide predictions for Portugal's coastal regions: high and low tide times with heights in metres, computed with the harmonic method calibrated against the official Instituto Hidrográfico tide tables. Everything is computed locally in your browser — no cookies, no tracking.",
+  "regions_title": "Coastal regions and reference ports",
+  "regions_intro": "Each region uses the tide harmonics of its reference port, calibrated against the Instituto Hidrográfico 2026 tide tables.",
+  "region_ref_port": "reference port",
+  "how_it_works_title": "How the predictions work",
+  "how_it_works_text": "Tide height is computed as a sum of harmonic constituents (M2, S2, N2, K2, K1, O1) with astronomical equilibrium arguments and nodal corrections from the 18.6-year lunar cycle. Because the constants are permanent properties of each port, predictions are valid for any date from August 2026 onwards, not just the calibration month.",
+  "faq_title": "Frequently asked questions",
+  "faq_q1": "How are the tide predictions computed?",
+  "faq_a1": "Using the harmonic method with six constituents (M2, S2, N2, K2, K1, O1), least-squares calibrated against the official Instituto Hidrográfico tide tables. All computations run locally in your browser.",
+  "faq_q2": "Are the predictions valid for navigation?",
+  "faq_a2": "No. The predictions are informational and do not replace the official Instituto Hidrográfico tide tables. They are not valid for navigation purposes.",
+  "faq_q3": "Which regions have tide predictions?",
+  "faq_a3": "All seven coastal regions: Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira and Açores."
 }

@@ -128,7 +128,11 @@ function updatePageTranslations() {
   elements.forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (key) {
-      el.textContent = translate(key);
+      if (el.tagName === 'META') {
+        el.setAttribute('content', translate(key));
+      } else {
+        el.textContent = translate(key);
+      }
     }
   });
 }

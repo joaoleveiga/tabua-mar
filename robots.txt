@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://joaoleveiga.github.io/tabua-mar/sitemap.xml
