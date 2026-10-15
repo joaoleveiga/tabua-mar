@@ -1,11 +1,135 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://joaoleveiga.github.io/tabua-mar/"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://joaoleveiga.github.io/tabua-mar/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://joaoleveiga.github.io/tabua-mar/"/>
     <loc>https://joaoleveiga.github.io/tabua-mar/</loc>
-    <changefreq>monthly</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://joaoleveiga.github.io/tabua-mar/"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://joaoleveiga.github.io/tabua-mar/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://joaoleveiga.github.io/tabua-mar/"/>
+    <loc>https://joaoleveiga.github.io/tabua-mar/en/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://joaoleveiga.github.io/tabua-mar/mares/norte/"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://joaoleveiga.github.io/tabua-mar/en/tides/norte/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://joaoleveiga.github.io/tabua-mar/mares/norte/"/>
+    <loc>https://joaoleveiga.github.io/tabua-mar/mares/norte/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://joaoleveiga.github.io/tabua-mar/mares/centro/"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://joaoleveiga.github.io/tabua-mar/en/tides/centro/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://joaoleveiga.github.io/tabua-mar/mares/centro/"/>
+    <loc>https://joaoleveiga.github.io/tabua-mar/mares/centro/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://joaoleveiga.github.io/tabua-mar/mares/lisboa/"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://joaoleveiga.github.io/tabua-mar/en/tides/lisboa/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://joaoleveiga.github.io/tabua-mar/mares/lisboa/"/>
+    <loc>https://joaoleveiga.github.io/tabua-mar/mares/lisboa/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://joaoleveiga.github.io/tabua-mar/mares/alentejo/"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://joaoleveiga.github.io/tabua-mar/en/tides/alentejo/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://joaoleveiga.github.io/tabua-mar/mares/alentejo/"/>
+    <loc>https://joaoleveiga.github.io/tabua-mar/mares/alentejo/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://joaoleveiga.github.io/tabua-mar/mares/algarve/"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://joaoleveiga.github.io/tabua-mar/en/tides/algarve/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://joaoleveiga.github.io/tabua-mar/mares/algarve/"/>
+    <loc>https://joaoleveiga.github.io/tabua-mar/mares/algarve/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://joaoleveiga.github.io/tabua-mar/mares/madeira/"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://joaoleveiga.github.io/tabua-mar/en/tides/madeira/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://joaoleveiga.github.io/tabua-mar/mares/madeira/"/>
+    <loc>https://joaoleveiga.github.io/tabua-mar/mares/madeira/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://joaoleveiga.github.io/tabua-mar/mares/acores/"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://joaoleveiga.github.io/tabua-mar/en/tides/acores/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://joaoleveiga.github.io/tabua-mar/mares/acores/"/>
+    <loc>https://joaoleveiga.github.io/tabua-mar/mares/acores/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://joaoleveiga.github.io/tabua-mar/en/tides/norte/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://joaoleveiga.github.io/tabua-mar/mares/norte/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://joaoleveiga.github.io/tabua-mar/en/tides/norte/"/>
+    <loc>https://joaoleveiga.github.io/tabua-mar/en/tides/norte/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://joaoleveiga.github.io/tabua-mar/en/tides/centro/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://joaoleveiga.github.io/tabua-mar/mares/centro/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://joaoleveiga.github.io/tabua-mar/en/tides/centro/"/>
+    <loc>https://joaoleveiga.github.io/tabua-mar/en/tides/centro/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://joaoleveiga.github.io/tabua-mar/en/tides/lisboa/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://joaoleveiga.github.io/tabua-mar/mares/lisboa/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://joaoleveiga.github.io/tabua-mar/en/tides/lisboa/"/>
+    <loc>https://joaoleveiga.github.io/tabua-mar/en/tides/lisboa/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://joaoleveiga.github.io/tabua-mar/en/tides/alentejo/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://joaoleveiga.github.io/tabua-mar/mares/alentejo/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://joaoleveiga.github.io/tabua-mar/en/tides/alentejo/"/>
+    <loc>https://joaoleveiga.github.io/tabua-mar/en/tides/alentejo/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://joaoleveiga.github.io/tabua-mar/en/tides/algarve/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://joaoleveiga.github.io/tabua-mar/mares/algarve/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://joaoleveiga.github.io/tabua-mar/en/tides/algarve/"/>
+    <loc>https://joaoleveiga.github.io/tabua-mar/en/tides/algarve/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://joaoleveiga.github.io/tabua-mar/en/tides/madeira/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://joaoleveiga.github.io/tabua-mar/mares/madeira/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://joaoleveiga.github.io/tabua-mar/en/tides/madeira/"/>
+    <loc>https://joaoleveiga.github.io/tabua-mar/en/tides/madeira/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://joaoleveiga.github.io/tabua-mar/en/tides/acores/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://joaoleveiga.github.io/tabua-mar/mares/acores/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://joaoleveiga.github.io/tabua-mar/en/tides/acores/"/>
+    <loc>https://joaoleveiga.github.io/tabua-mar/en/tides/acores/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+
     <loc>https://joaoleveiga.github.io/tabua-mar/privacy.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>

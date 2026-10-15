@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en-GB" data-lang="en_GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portugal Tides — Tide Tables &amp; Coastal Predictions</title>
+    <meta name="description" content="Coastal tide predictions for Portugal: Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira and Açores. High and low tide times with heights in metres, month by month.">
+    <link rel="canonical" href="https://joaoleveiga.github.io/tabua-mar/en/">
+    <link rel="alternate" hreflang="en-GB" href="https://joaoleveiga.github.io/tabua-mar/en/">
+    <link rel="alternate" hreflang="pt-PT" href="https://joaoleveiga.github.io/tabua-mar/">
+    <link rel="alternate" hreflang="x-default" href="https://joaoleveiga.github.io/tabua-mar/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Portugal Tides — Tide Tables &amp; Coastal Predictions">
+    <meta property="og:description" content="Coastal tide predictions for Portugal: Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira and Açores. High and low tide times with heights in metres, month by month.">
+    <meta property="og:url" content="https://joaoleveiga.github.io/tabua-mar/en/">
+    <meta name="twitter:card" content="summary">
+    <link rel="stylesheet" href="../css/style.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Portugal Coastal Tides — Tide Table & Predictions",
+      "url": "https://joaoleveiga.github.io/tabua-mar/en/",
+      "applicationCategory": "ScienceApplication",
+      "operatingSystem": "Any",
+      "inLanguage": "en-GB",
+      "description": "Coastal tide predictions for Portugal: Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira and Açores. High and low tide times with heights in metres, month by month.",
+      "isAccessibleForFree": true
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How are the tide predictions computed?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Using the harmonic method with six constituents (M2, S2, N2, K2, K1, O1), least-squares calibrated against the official Instituto Hidrográfico tide tables. All computations run locally in your browser." }
+        },
+        {
+          "@type": "Question",
+          "name": "Are the predictions valid for navigation?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. The predictions are informational and do not replace the official Instituto Hidrográfico tide tables. They are not valid for navigation purposes." }
+        },
+        {
+          "@type": "Question",
+          "name": "Which regions have tide predictions?",
+          "acceptedAnswer": { "@type": "Answer", "text": "All seven coastal regions: Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira and Açores." }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div class="container">
+        <header>
+            <p class="lang-switch"><a hreflang="pt-PT" href="https://joaoleveiga.github.io/tabua-mar/">Português</a></p>
+            <h1><span class="wave-emoji" aria-label="Wave">🌊</span> Portugal Coastal Tides — Tide Table &amp; Predictions - NUTS II Regions</h1>
+            <p class="intro">Check tide predictions for Portugal's coastal regions: high and low tide times with heights in metres, computed with the harmonic method calibrated against the official Instituto Hidrográfico tide tables. Everything is computed locally in your browser — no cookies, no tracking.</p>
+        </header>
+        <main id="main-content">
+            <form id="tide-form" aria-label="Location:">
+                <fieldset class="controls">
+                    <div class="control-group">
+                        <label for="location">Location:</label>
+                        <select id="location" aria-required="true">
+                            <option value="">Select a location...</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label for="date">Date:</label>
+                        <input type="date" id="date" min="2026-08-01" aria-required="true">
+                    </div>
+                </fieldset>
+            </form>
+            <section id="results" aria-live="polite" aria-busy="false">
+                <p>Select a location and date to see tide predictions.</p>
+            </section>
+            <section id="regions" aria-labelledby="regions-title">
+                <h2 id="regions-title">Coastal regions and reference ports</h2>
+                <p>Each region uses the tide harmonics of its reference port, calibrated against the Instituto Hidrográfico 2026 tide tables.</p>
+                <ul class="regions-list">
+                    <li><a href="tides/norte/">Tides of Norte</a> — reference port: Leixões</li>
+                    <li><a href="tides/centro/">Tides of Centro</a> — reference port: Aveiro</li>
+                    <li><a href="tides/lisboa/">Tides of Lisboa e Vale do Tejo</a> — reference port: Lisboa</li>
+                    <li><a href="tides/alentejo/">Tides of Alentejo</a> — reference port: Sines</li>
+                    <li><a href="tides/algarve/">Tides of Algarve</a> — reference port: Faro</li>
+                    <li><a href="tides/madeira/">Tides of Madeira</a> — reference port: Funchal</li>
+                    <li><a href="tides/acores/">Tides of Açores</a> — reference port: Ponta Delgada</li>
+                </ul>
+            </section>
+            <section id="how-it-works" class="info-section" aria-labelledby="how-it-works-title">
+                <h2 id="how-it-works-title">How the predictions work</h2>
+                <p>Tide height is computed as a sum of harmonic constituents (M2, S2, N2, K2, K1, O1) with astronomical equilibrium arguments and nodal corrections from the 18.6-year lunar cycle. Because the constants are permanent properties of each port, predictions are valid for any date from August 2026 onwards, not just the calibration month.</p>
+            </section>
+            <section id="faq" class="info-section" aria-labelledby="faq-title">
+                <h2 id="faq-title">Frequently asked questions</h2>
+                <h3>How are the tide predictions computed?</h3>
+                <p>Using the harmonic method with six constituents (M2, S2, N2, K2, K1, O1), least-squares calibrated against the official Instituto Hidrográfico tide tables. All computations run locally in your browser.</p>
+                <h3>Are the predictions valid for navigation?</h3>
+                <p>No. The predictions are informational and do not replace the official Instituto Hidrográfico tide tables. They are not valid for navigation purposes.</p>
+                <h3>Which regions have tide predictions?</h3>
+                <p>All seven coastal regions: Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira and Açores.</p>
+            </section>
+        </main>
+        <footer>
+            <p>Tide predictions based on harmonic constituents (M2, S2, N2, K2, K1, O1) with astronomical equilibrium arguments and nodal corrections, calibrated against official Instituto Hidrografico tide tables. Not valid for navigation.</p>
+            <p><a href="../privacy.html">Privacy Policy</a> | GPLv3</p>
+        </footer>
+    </div>
+    <script src="../js/data.js"></script>
+    <script src="../js/tide.js"></script>
+    <script src="../js/translations.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>

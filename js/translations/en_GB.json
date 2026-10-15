@@ -51,5 +51,16 @@
   "faq_q2": "Are the predictions valid for navigation?",
   "faq_a2": "No. The predictions are informational and do not replace the official Instituto Hidrográfico tide tables. They are not valid for navigation purposes.",
   "faq_q3": "Which regions have tide predictions?",
-  "faq_a3": "All seven coastal regions: Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira and Açores."
+  "faq_a3": "All seven coastal regions: Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira and Açores.",
+  "home_title": "Portugal Tides — Tide Tables & Coastal Predictions",
+  "other_language": "Português",
+  "tides_of": "Tides of",
+  "other_regions_title": "Other regions",
+  "region_title": "{region} Tides ({port}) — Times & Heights | Tide Table",
+  "region_meta_description": "Tide predictions for {region} (reference port {port}): high and low tide times with heights in metres. Check any date from August 2026 onwards.",
+  "region_h1": "{region} Tides",
+  "region_intro": "Tide predictions for the {region} region, using the harmonics of reference port {port}, calibrated against the official Instituto Hidrográfico tide tables. Below are the next 14 days; use the tool to check any other date.",
+  "forecast_title": "Tide predictions from {date}",
+  "region_tool_title": "Check another date",
+  "back_home": "Home"
 }

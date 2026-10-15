@@ -80,7 +80,13 @@ async function setLanguage(lang) {
 
 // Get user's preferred language
 function getUserLanguage() {
-  // Priority: localStorage > browser > default (pt_PT)
+  // Priority: page override > localStorage > browser > default (pt_PT)
+  if (typeof document !== 'undefined') {
+    const pageLang = document.documentElement.getAttribute('data-lang');
+    if (pageLang && SUPPORTED_LANGS.includes(pageLang)) {
+      return pageLang;
+    }
+  }
   
   // Check localStorage
   try {

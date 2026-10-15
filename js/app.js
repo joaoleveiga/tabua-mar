@@ -35,6 +35,10 @@ async function init() {
     option.textContent = LOCATIONS[key].name;
     locationSelect.appendChild(option);
   }
+  const presetLocation = document.body.getAttribute('data-location');
+  if (presetLocation && LOCATIONS[presetLocation]) {
+    locationSelect.value = presetLocation;
+  }
 
   // Set default date to today or August 1, 2026
   const today = new Date();

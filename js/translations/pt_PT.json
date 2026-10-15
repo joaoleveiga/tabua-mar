@@ -51,5 +51,16 @@
   "faq_q2": "As previsões são válidas para navegação?",
   "faq_a2": "Não. As previsões são informativas e não substituem as tabelas oficiais do Instituto Hidrográfico. Não são válidas para fins de navegação.",
   "faq_q3": "Para que regiões existem previsões?",
-  "faq_a3": "Para as sete regiões costeiras: Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira e Açores."
+  "faq_a3": "Para as sete regiões costeiras: Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira e Açores.",
+  "home_title": "Tabela de Marés Portugal — Previsões de Marés Costeiras",
+  "other_language": "English",
+  "tides_of": "Marés de",
+  "other_regions_title": "Outras regiões",
+  "region_title": "Marés {region} ({port}) — Previsões e Horários | Tabela de Marés",
+  "region_meta_description": "Previsões de marés para {region} (porto de referência {port}): horas de preia-mar e baixa-mar com alturas em metros. Consulte qualquer data a partir de agosto de 2026.",
+  "region_h1": "Marés {region}",
+  "region_intro": "Previsões de marés para a região de {region}, usando os harmónicos do porto de referência {port}, calibrados com as tabelas de marés oficiais do Instituto Hidrográfico. Abaixo estão as previsões dos próximos 14 dias; use a ferramenta para consultar qualquer outra data.",
+  "forecast_title": "Previsões de marés a partir de {date}",
+  "region_tool_title": "Consultar outra data",
+  "back_home": "Página inicial"
 }

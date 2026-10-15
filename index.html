@@ -1,40 +1,30 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt-PT" data-lang="pt_PT">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="title">Tabela de Marés Portugal — Previsões de Marés Costeiras</title>
-    <meta name="description" data-i18n="meta_description" content="Previsões de marés para Portugal: Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira e Açores. Horas de preia-mar e baixa-mar, alturas em metros, mês a mês.">
+    <title>Tabela de Marés Portugal — Previsões de Marés Costeiras</title>
+    <meta name="description" content="Previsões de marés para Portugal: Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira e Açores. Horas de preia-mar e baixa-mar, alturas em metros, mês a mês.">
     <link rel="canonical" href="https://joaoleveiga.github.io/tabua-mar/">
     <link rel="alternate" hreflang="pt-PT" href="https://joaoleveiga.github.io/tabua-mar/">
-    <link rel="alternate" hreflang="en" href="https://joaoleveiga.github.io/tabua-mar/?lang=en_GB">
+    <link rel="alternate" hreflang="en-GB" href="https://joaoleveiga.github.io/tabua-mar/en/">
     <link rel="alternate" hreflang="x-default" href="https://joaoleveiga.github.io/tabua-mar/">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Marés Costeiras de Portugal">
     <meta property="og:title" content="Tabela de Marés Portugal — Previsões de Marés Costeiras">
-    <meta property="og:description" content="Previsões de marés para Norte, Centro, Lisboa, Alentejo, Algarve, Madeira e Açores: horas de preia-mar e baixa-mar com alturas. Sem cookies, cálculo local no navegador.">
+    <meta property="og:description" content="Previsões de marés para Portugal: Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira e Açores. Horas de preia-mar e baixa-mar, alturas em metros, mês a mês.">
     <meta property="og:url" content="https://joaoleveiga.github.io/tabua-mar/">
-    <meta property="og:locale" content="pt_PT">
-    <meta property="og:locale:alternate" content="en_GB">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Tabela de Marés Portugal — Previsões de Marés Costeiras">
-    <meta name="twitter:description" content="Previsões de marés para as regiões costeiras de Portugal, Madeira e Açores. Horas de preia-mar e baixa-mar com alturas.">
     <link rel="stylesheet" href="css/style.css">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "Marés Costeiras de Portugal",
+      "name": "Tabela de Marés Portugal",
       "url": "https://joaoleveiga.github.io/tabua-mar/",
       "applicationCategory": "ScienceApplication",
       "operatingSystem": "Any",
-      "inLanguage": ["pt-PT", "en-GB"],
-      "description": "Previsões de marés para as regiões costeiras de Portugal (Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve), Madeira e Açores, calculadas com o método harmónico (M2, S2, N2, K2, K1, O1) calibrado com as tabelas de marés do Instituto Hidrográfico.",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "EUR"
-      },
+      "inLanguage": "pt-PT",
+      "description": "Previsões de marés para Portugal: Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira e Açores. Horas de preia-mar e baixa-mar, alturas em metros, mês a mês.",
       "isAccessibleForFree": true
     }
     </script>
@@ -46,107 +36,80 @@
         {
           "@type": "Question",
           "name": "Como são calculadas as previsões de marés?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "As previsões usam o método harmónico com seis constituintes de maré (M2, S2, N2, K2, K1, O1), argumentos de equilíbrio astronómicos e correções nodais, calibrados por mínimos quadrados com as tabelas de marés oficiais do Instituto Hidrográfico. Todos os cálculos são feitos localmente no navegador."
-          }
+          "acceptedAnswer": { "@type": "Answer", "text": "Com o método harmónico de seis constituintes (M2, S2, N2, K2, K1, O1), calibrado por mínimos quadrados com as tabelas de marés oficiais do Instituto Hidrográfico. Todos os cálculos são feitos localmente no navegador." }
         },
         {
           "@type": "Question",
-          "name": "As previsões de marés são válidas para navegação?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Não. As previsões são informativas e não substituem as tabelas oficiais do Instituto Hidrográfico. Não são válidas para fins de navegação."
-          }
+          "name": "As previsões são válidas para navegação?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Não. As previsões são informativas e não substituem as tabelas oficiais do Instituto Hidrográfico. Não são válidas para fins de navegação." }
         },
         {
           "@type": "Question",
-          "name": "Para que regiões existem previsões de marés?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Existem previsões para as sete regiões costeiras: Norte (porto de referência Leixões), Centro (Aveiro), Lisboa e Vale do Tejo (Lisboa), Alentejo (Sines), Algarve (Faro), Madeira (Funchal) e Açores (Ponta Delgada)."
-          }
+          "name": "Para que regiões existem previsões?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Para as sete regiões costeiras: Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira e Açores." }
         }
       ]
     }
     </script>
 </head>
 <body>
-    <a href="#main-content" class="skip-link" data-i18n="skip_link">Ir para o conteúdo principal</a>
-
+    <a href="#main-content" class="skip-link">Ir para o conteúdo principal</a>
     <div class="container">
         <header>
-            <div class="language-picker">
-                <label for="language" class="visually-hidden">Select language</label>
-                <select id="language" aria-label="Select language">
-                    <option value="pt_PT">Português</option>
-                    <option value="en_GB">English</option>
-                </select>
-            </div>
-            <h1><span class="wave-emoji" aria-label="Wave">🌊</span> <span data-i18n="title">Tabela de Marés Portugal</span> - <span data-i18n="subtitle">Regiões NUTS II</span></h1>
-            <p class="intro" data-i18n="intro_text">Consulte as previsões de marés para as regiões costeiras de Portugal: horas de preia-mar e baixa-mar com alturas em metros, calculadas com o método harmónico calibrado com as tabelas oficiais do Instituto Hidrográfico. Tudo calculado localmente no seu navegador, sem cookies e sem rastreio.</p>
+            <p class="lang-switch"><a hreflang="en-GB" href="https://joaoleveiga.github.io/tabua-mar/en/">English</a></p>
+            <h1><span class="wave-emoji" aria-label="Wave">🌊</span> Tabela de Marés Portugal - Regiões NUTS II</h1>
+            <p class="intro">Consulte as previsões de marés para as regiões costeiras de Portugal: horas de preia-mar e baixa-mar com alturas em metros, calculadas com o método harmónico calibrado com as tabelas oficiais do Instituto Hidrográfico. Tudo calculado localmente no seu navegador, sem cookies e sem rastreio.</p>
         </header>
-
         <main id="main-content">
-            <form id="tide-form" aria-label="Tide prediction form">
+            <form id="tide-form" aria-label="Localização:">
                 <fieldset class="controls">
-                    <legend class="visually-hidden">Tide Prediction Settings</legend>
-
                     <div class="control-group">
-                        <label for="location" data-i18n="location_label">Localização:</label>
-                        <select id="location" aria-label="Select a coastal region in Portugal" aria-required="true">
-                            <option value="" data-i18n="select_location">Selecionar uma localização...</option>
+                        <label for="location">Localização:</label>
+                        <select id="location" aria-required="true">
+                            <option value="">Selecionar uma localização...</option>
                         </select>
                     </div>
-
                     <div class="control-group">
-                        <label for="date" data-i18n="date_label">Data:</label>
-                        <input type="date" id="date" min="2026-08-01" aria-label="Select a date for tide prediction" aria-required="true">
+                        <label for="date">Data:</label>
+                        <input type="date" id="date" min="2026-08-01" aria-required="true">
                     </div>
                 </fieldset>
             </form>
-
             <section id="results" aria-live="polite" aria-busy="false">
-                <p data-i18n="select_prompt">Selecionar uma localização e data para ver as previsões de marés.</p>
+                <p>Selecionar uma localização e data para ver as previsões de marés.</p>
             </section>
-
-            <section id="regions" class="regions-section" aria-labelledby="regions-title">
-                <h2 id="regions-title" data-i18n="regions_title">Regiões costeiras e portos de referência</h2>
-                <p data-i18n="regions_intro">Cada região usa os harmónicos de maré do seu porto de referência, calibrados com as tabelas de marés de 2026 do Instituto Hidrográfico.</p>
+            <section id="regions" aria-labelledby="regions-title">
+                <h2 id="regions-title">Regiões costeiras e portos de referência</h2>
+                <p>Cada região usa os harmónicos de maré do seu porto de referência, calibrados com as tabelas de marés de 2026 do Instituto Hidrográfico.</p>
                 <ul class="regions-list">
-                    <li><strong>Marés do Norte</strong> — <span data-i18n="region_ref_port">porto de referência</span> Leixões</li>
-                    <li><strong>Marés do Centro</strong> — <span data-i18n="region_ref_port">porto de referência</span> Aveiro</li>
-                    <li><strong>Marés de Lisboa e Vale do Tejo</strong> — <span data-i18n="region_ref_port">porto de referência</span> Lisboa</li>
-                    <li><strong>Marés do Alentejo</strong> — <span data-i18n="region_ref_port">porto de referência</span> Sines</li>
-                    <li><strong>Marés do Algarve</strong> — <span data-i18n="region_ref_port">porto de referência</span> Faro</li>
-                    <li><strong>Marés da Madeira</strong> — <span data-i18n="region_ref_port">porto de referência</span> Funchal</li>
-                    <li><strong>Marés dos Açores</strong> — <span data-i18n="region_ref_port">porto de referência</span> Ponta Delgada</li>
+                    <li><a href="mares/norte/">Marés de Norte</a> — porto de referência: Leixões</li>
+                    <li><a href="mares/centro/">Marés de Centro</a> — porto de referência: Aveiro</li>
+                    <li><a href="mares/lisboa/">Marés de Lisboa e Vale do Tejo</a> — porto de referência: Lisboa</li>
+                    <li><a href="mares/alentejo/">Marés de Alentejo</a> — porto de referência: Sines</li>
+                    <li><a href="mares/algarve/">Marés de Algarve</a> — porto de referência: Faro</li>
+                    <li><a href="mares/madeira/">Marés de Madeira</a> — porto de referência: Funchal</li>
+                    <li><a href="mares/acores/">Marés de Açores</a> — porto de referência: Ponta Delgada</li>
                 </ul>
             </section>
-
             <section id="how-it-works" class="info-section" aria-labelledby="how-it-works-title">
-                <h2 id="how-it-works-title" data-i18n="how_it_works_title">Como funcionam as previsões</h2>
-                <p data-i18n="how_it_works_text">A altura da maré é calculada como soma de constituintes harmónicas (M2, S2, N2, K2, K1, O1) com argumentos de equilíbrio astronómicos e correções nodais do ciclo lunar de 18,6 anos. Como as constantes são propriedades permanentes de cada porto, as previsões são válidas para qualquer data a partir de agosto de 2026, não apenas para o mês de calibração.</p>
+                <h2 id="how-it-works-title">Como funcionam as previsões</h2>
+                <p>A altura da maré é calculada como soma de constituintes harmónicas (M2, S2, N2, K2, K1, O1) com argumentos de equilíbrio astronómicos e correções nodais do ciclo lunar de 18,6 anos. Como as constantes são propriedades permanentes de cada porto, as previsões são válidas para qualquer data a partir de agosto de 2026, não apenas para o mês de calibração.</p>
             </section>
-
             <section id="faq" class="info-section" aria-labelledby="faq-title">
-                <h2 id="faq-title" data-i18n="faq_title">Perguntas frequentes</h2>
-                <h3 data-i18n="faq_q1">Como são calculadas as previsões de marés?</h3>
-                <p data-i18n="faq_a1">Com o método harmónico de seis constituintes (M2, S2, N2, K2, K1, O1), calibrado por mínimos quadrados com as tabelas de marés oficiais do Instituto Hidrográfico. Todos os cálculos são feitos localmente no navegador.</p>
-                <h3 data-i18n="faq_q2">As previsões são válidas para navegação?</h3>
-                <p data-i18n="faq_a2">Não. As previsões são informativas e não substituem as tabelas oficiais do Instituto Hidrográfico. Não são válidas para fins de navegação.</p>
-                <h3 data-i18n="faq_q3">Para que regiões existem previsões?</h3>
-                <p data-i18n="faq_a3">Para as sete regiões costeiras: Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira e Açores.</p>
+                <h2 id="faq-title">Perguntas frequentes</h2>
+                <h3>Como são calculadas as previsões de marés?</h3>
+                <p>Com o método harmónico de seis constituintes (M2, S2, N2, K2, K1, O1), calibrado por mínimos quadrados com as tabelas de marés oficiais do Instituto Hidrográfico. Todos os cálculos são feitos localmente no navegador.</p>
+                <h3>As previsões são válidas para navegação?</h3>
+                <p>Não. As previsões são informativas e não substituem as tabelas oficiais do Instituto Hidrográfico. Não são válidas para fins de navegação.</p>
+                <h3>Para que regiões existem previsões?</h3>
+                <p>Para as sete regiões costeiras: Norte, Centro, Lisboa e Vale do Tejo, Alentejo, Algarve, Madeira e Açores.</p>
             </section>
         </main>
-
         <footer>
-            <p data-i18n="predictions_note">Previsões de marés baseadas em constituintes harmónicas (M₂, S₂, N₂, K₂, K₁, O₁) com argumentos de equilíbrio astronómicos e correções nodais, calibradas com as tabelas de marés oficiais do Instituto Hidrográfico. Não é válido para navegação.</p>
-            <p><a href="privacy.html" data-i18n="privacy_policy">Política de Privacidade</a> | <span data-i18n="gplv3">GPLv3</span></p>
+            <p>Previsões de marés baseadas em constituintes harmónicas (M2, S2, N2, K2, K1, O1) com argumentos de equilíbrio astronómicos e correções nodais, calibradas com as tabelas de marés oficiais do Instituto Hidrográfico. Não é válido para navegação.</p>
+            <p><a href="privacy.html">Política de Privacidade</a> | GPLv3</p>
         </footer>
     </div>
-
-    <!-- Load scripts in order -->
     <script src="js/data.js"></script>
     <script src="js/tide.js"></script>
     <script src="js/translations.js"></script>
