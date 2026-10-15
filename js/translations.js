@@ -6,13 +6,16 @@ let currentLang = 'pt_PT';
 // Supported languages
 const SUPPORTED_LANGS = ['pt_PT', 'en_GB'];
 
+// Base URL for translation dictionaries, captured while this script is
+// executing (document.currentScript is only available at parse time).
+const SCRIPT_BASE = (typeof document !== 'undefined' && document.currentScript)
+  ? document.currentScript.src.replace(/js\/translations\.js$/, 'js/')
+  : 'js/';
+
 // Load translations from JSON file
 async function loadTranslations(lang) {
   try {
-    const base = (typeof document !== 'undefined' && document.currentScript)
-      ? document.currentScript.src.replace(/js\/translations\.js$/, 'js/')
-      : 'js/';
-    const response = await fetch(`${base}translations/${lang}.json`);
+    const response = await fetch(`${SCRIPT_BASE}translations/${lang}.json`);
     if (!response.ok) {
       throw new Error(`Failed to load translations for ${lang}`);
     }
