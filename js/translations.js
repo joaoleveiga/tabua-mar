@@ -9,7 +9,10 @@ const SUPPORTED_LANGS = ['pt_PT', 'en_GB'];
 // Load translations from JSON file
 async function loadTranslations(lang) {
   try {
-    const response = await fetch(`js/translations/${lang}.json`);
+    const base = (typeof document !== 'undefined' && document.currentScript)
+      ? document.currentScript.src.replace(/js\/translations\.js$/, 'js/')
+      : 'js/';
+    const response = await fetch(`${base}translations/${lang}.json`);
     if (!response.ok) {
       throw new Error(`Failed to load translations for ${lang}`);
     }
