@@ -55,7 +55,7 @@
   "home_title": "Portugal Tides — Tide Tables & Coastal Predictions",
   "intro_title": "About this site",
   "other_language": "Português",
-  "tides_of": "Tides of",
+  "tides_of": "Tides",
   "other_regions_title": "Other regions",
   "region_title": "{region} Tides ({port}) — Times & Heights | Tide Table",
   "region_meta_description": "Tide predictions for {region} (reference port {port}): high and low tide times with heights in metres. Check any date from August 2026 onwards.",
@@ -63,5 +63,14 @@
   "region_intro": "Tide predictions for the {region} region, using the harmonics of reference port {port}, calibrated against the official Instituto Hidrográfico tide tables. Below are the next 14 days; use the tool to check any other date.",
   "forecast_title": "Tide predictions from {date}",
   "region_tool_title": "Check another date",
-  "back_home": "Home"
+  "back_home": "Home",
+  "region_display": {
+    "norte": "Norte",
+    "centro": "Centro",
+    "lisboa": "Lisboa e Vale do Tejo",
+    "alentejo": "Alentejo",
+    "algarve": "Algarve",
+    "madeira": "Madeira",
+    "acores": "Açores"
+  }
 }

@@ -55,7 +55,7 @@
   "home_title": "Tabela de Marés Portugal — Previsões de Marés Costeiras",
   "intro_title": "Sobre este site",
   "other_language": "English",
-  "tides_of": "Marés de",
+  "tides_of": "Marés",
   "other_regions_title": "Outras regiões",
   "region_title": "Marés {region} ({port}) — Previsões e Horários | Tabela de Marés",
   "region_meta_description": "Previsões de marés para {region} (porto de referência {port}): horas de preia-mar e baixa-mar com alturas em metros. Consulte qualquer data a partir de agosto de 2026.",
@@ -63,5 +63,14 @@
   "region_intro": "Previsões de marés para a região de {region}, usando os harmónicos do porto de referência {port}, calibrados com as tabelas de marés oficiais do Instituto Hidrográfico. Abaixo estão as previsões dos próximos 14 dias; use a ferramenta para consultar qualquer outra data.",
   "forecast_title": "Previsões de marés a partir de {date}",
   "region_tool_title": "Consultar outra data",
-  "back_home": "Página inicial"
+  "back_home": "Página inicial",
+  "region_display": {
+    "norte": "do Norte",
+    "centro": "do Centro",
+    "lisboa": "de Lisboa e Vale do Tejo",
+    "alentejo": "do Alentejo",
+    "algarve": "do Algarve",
+    "madeira": "da Madeira",
+    "acores": "dos Açores"
+  }
 }

@@ -7,6 +7,7 @@ const fs = require('fs');
 const path = require('path');
 
 const root = path.join(__dirname, '..');
+const outDir = process.env.TABUA_OUTPUT_DIR || root;
 const SITE = 'https://joaoleveiga.github.io/tabua-mar';
 
 const src = fs.readFileSync(path.join(root, 'js/data.js'), 'utf8') + '\n' +
@@ -33,6 +34,12 @@ const escapeHtml = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
   .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 const pad = n => String(n).padStart(2, '0');
+
+// Localized display label for a region ("Marés do Norte" / "Norte Tides").
+function regionDisplay(langKey, regionKey, t) {
+  const table = T[langKey].region_display;
+  return (table && table[regionKey]) || regionKey;
+}
 const dateKey = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 
 function forecastStart() {
@@ -78,29 +85,29 @@ function regionPage(lang, key, location, days, otherLocs) {
   const altUrl = `${SITE}/${alt.dir ? alt.dir + '/' : ''}${alt.pages}/${SLUGS[key]}/`;
   const otherLinks = otherLocs.map(o => {
     const oPrefix = lang.dir ? `${lang.dir}/` : '';
-    return `<li><a href="/${dirPrefix ? dirPrefix : ''}tabua-mar/${oPrefix}${lang.pages}/${SLUGS[o.key]}/">${escapeHtml(t('tides_of'))} ${escapeHtml(o.name)}</a></li>`;
+    return `<li><a href="/tabua-mar/${oPrefix}${lang.pages}/${SLUGS[o.key]}/">${escapeHtml(t('tides_of'))} ${escapeHtml(regionDisplay(lang.key, o.key, t))}</a></li>`;
   }).join('\n');
   return `<!DOCTYPE html>
 <html lang="${lang.code}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${escapeHtml(t('region_title').replace('{region}', location.name).replace('{port}', location.referencePort))}</title>
-    <meta name="description" content="${escapeHtml(t('region_meta_description').replace('{region}', location.name).replace('{port}', location.referencePort))}">
+    <title>${escapeHtml(t('region_title').replace('{region}', regionDisplay(lang.key, key, t)).replace('{port}', location.referencePort))}</title>
+    <meta name="description" content="${escapeHtml(t('region_meta_description').replace('{region}', regionDisplay(lang.key, key, t)).replace('{port}', location.referencePort))}">
     <link rel="canonical" href="${selfUrl}">
     <link rel="alternate" hreflang="${lang.code}" href="${selfUrl}">
     <link rel="alternate" hreflang="${alt.code}" href="${altUrl}">
     <link rel="alternate" hreflang="x-default" href="${selfUrl}">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="${escapeHtml(t('region_title').replace('{region}', location.name).replace('{port}', location.referencePort))}">
-    <meta property="og:description" content="${escapeHtml(t('region_meta_description').replace('{region}', location.name).replace('{port}', location.referencePort))}">
+    <meta property="og:title" content="${escapeHtml(t('region_title').replace('{region}', regionDisplay(lang.key, key, t)).replace('{port}', location.referencePort))}">
+    <meta property="og:description" content="${escapeHtml(t('region_meta_description').replace('{region}', regionDisplay(lang.key, key, t)).replace('{port}', location.referencePort))}">
     <meta property="og:url" content="${selfUrl}">
     <link rel="stylesheet" href="/tabua-mar/css/style.css">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": ${JSON.stringify(t('region_title').replace('{region}', location.name).replace('{port}', location.referencePort))},
+      "name": ${JSON.stringify(t('region_title').replace('{region}', regionDisplay(lang.key, key, t)).replace('{port}', location.referencePort))},
       "url": "${selfUrl}",
       "inLanguage": "${lang.code}"
     }
@@ -111,8 +118,8 @@ function regionPage(lang, key, location, days, otherLocs) {
     <div class="container">
         <header>
             <p class="lang-switch"><a href="${altUrl}">${escapeHtml(t('other_language'))}</a> | <a href="/tabua-mar/${lang.dir ? lang.dir + '/' : ''}">${escapeHtml(t('back_home'))}</a></p>
-            <h1>${escapeHtml(t('region_h1').replace('{region}', location.name))} <span class="ref-port">(${escapeHtml(t('region_ref_port'))}: ${escapeHtml(location.referencePort)})</span></h1>
-            <p class="intro">${escapeHtml(t('region_intro').replace('{region}', location.name).replace('{port}', location.referencePort))}</p>
+            <h1>${escapeHtml(t('region_h1').replace('{region}', regionDisplay(lang.key, key, t)))} <span class="ref-port">(${escapeHtml(t('region_ref_port'))}: ${escapeHtml(location.referencePort)})</span></h1>
+            <p class="intro">${escapeHtml(t('region_intro').replace('{region}', regionDisplay(lang.key, key, t)).replace('{port}', location.referencePort))}</p>
         </header>
         <main id="main-content">
             <section id="forecast" aria-labelledby="forecast-title">
@@ -146,7 +153,7 @@ ${otherLinks}
         </main>
         <footer>
             <p>${escapeHtml(t('predictions_note'))}</p>
-            <p><a href="/tabua-mar/${lang.dir ? lang.dir + '/' : ''}privacy.html">${escapeHtml(t('privacy_policy'))}</a> | ${escapeHtml(t('gplv3'))}</p>
+            <p><a href="/tabua-mar/privacy.html">${escapeHtml(t('privacy_policy'))}</a> | ${escapeHtml(t('gplv3'))}</p>
         </footer>
     </div>
     <script src="/tabua-mar/js/data.js"></script>
@@ -252,7 +259,7 @@ function homePage(lang) {
                 <ul class="regions-list">
 ${Object.entries(LOCATIONS).map(([key, loc]) => {
   const p = `${lang.pages}/${SLUGS[key]}/`;
-  return `                    <li><a href="${p}">${escapeHtml(t('tides_of'))} ${escapeHtml(loc.name)}</a> — ${escapeHtml(t('region_ref_port'))}: ${escapeHtml(loc.referencePort)}</li>`;
+  return `                    <li><a href="${p}">${escapeHtml(t('tides_of'))} ${escapeHtml(regionDisplay(lang.key, key, t))}</a> — ${escapeHtml(t('region_ref_port'))}: ${escapeHtml(loc.referencePort)}</li>`;
 }).join('\n')}
                 </ul>
             </section>
@@ -310,15 +317,15 @@ ptHome.alts = [{ code: 'pt-PT', href: ptHome.loc }, { code: 'en-GB', href: enHom
 enHome.alts = ptHome.alts;
 urls.push(ptHome, enHome);
 
-fs.writeFileSync(path.join(root, 'index.html'), homePage(LANGS[0]));
-fs.mkdirSync(path.join(root, 'en'), { recursive: true });
-fs.writeFileSync(path.join(root, 'en/index.html'), homePage(LANGS[1]));
+fs.writeFileSync(path.join(outDir, 'index.html'), homePage(LANGS[0]));
+fs.mkdirSync(path.join(outDir, 'en'), { recursive: true });
+fs.writeFileSync(path.join(outDir, 'en/index.html'), homePage(LANGS[1]));
 
 for (const lang of LANGS) {
   for (const [key, location] of Object.entries(LOCATIONS)) {
     const days = buildDays(location, start, 14);
     const dirPrefix = lang.dir ? `${lang.dir}/` : '';
-    const pageDir = path.join(root, dirPrefix, lang.pages, SLUGS[key]);
+    const pageDir = path.join(outDir, dirPrefix, lang.pages, SLUGS[key]);
     fs.mkdirSync(pageDir, { recursive: true });
     fs.writeFileSync(path.join(pageDir, 'index.html'),
       regionPage(lang, key, location, days, Object.entries(LOCATIONS).map(([k, l]) => ({ key: k, name: l.name }))));
@@ -333,5 +340,5 @@ for (const lang of LANGS) {
 }
 
 urls.push({ loc: `${SITE}/privacy.html`, freq: 'yearly', priority: '0.3', alts: [] });
-fs.writeFileSync(path.join(root, 'sitemap.xml'), sitemap(urls));
+fs.writeFileSync(path.join(outDir, 'sitemap.xml'), sitemap(urls));
 console.log(`Generated ${urls.length} sitemap entries; forecast starts ${start.toISOString().slice(0, 10)}`);
