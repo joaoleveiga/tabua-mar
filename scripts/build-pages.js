@@ -223,7 +223,6 @@ function homePage(lang) {
         <header>
             <p class="lang-switch"><a hreflang="${alt.code}" href="${altUrl}">${escapeHtml(t('other_language'))}</a></p>
             <h1><span class="wave-emoji" aria-label="Wave">🌊</span> ${escapeHtml(t('title'))} - ${escapeHtml(t('subtitle'))}</h1>
-            <p class="intro">${escapeHtml(t('intro_text'))}</p>
         </header>
         <main id="main-content">
             <form id="tide-form" aria-label="${escapeHtml(t('location_label'))}">
@@ -242,6 +241,10 @@ function homePage(lang) {
             </form>
             <section id="results" aria-live="polite" aria-busy="false">
                 <p>${escapeHtml(t('select_prompt'))}</p>
+            </section>
+            <section id="intro" aria-labelledby="intro-title">
+                <h2 id="intro-title">${escapeHtml(t('intro_title'))}</h2>
+                <p class="intro">${escapeHtml(t('intro_text'))}</p>
             </section>
             <section id="regions" aria-labelledby="regions-title">
                 <h2 id="regions-title">${escapeHtml(t('regions_title'))}</h2>

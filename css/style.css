@@ -404,3 +404,11 @@ input:focus {
   margin: 0.25em 0;
   line-height: 1.4;
 }
+
+#intro {
+  margin-top: 2em;
+}
+
+#intro h2 {
+  font-size: 1.1em;
+}
