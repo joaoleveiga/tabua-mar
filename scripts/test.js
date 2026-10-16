@@ -187,6 +187,24 @@ for (const page of ['index.html', 'en/index.html',
   });
 }
 
+// Language switch: PT | EN on every page, active language highlighted
+test('lang switch shows PT | EN with active language highlighted', () => {
+  const all = [
+    { p: 'index.html', active: 'PT' },
+    { p: 'en/index.html', active: 'EN' },
+    ...REGIONS.map(r => ({ p: `mares/${r}/index.html`, active: 'PT' })),
+    ...REGIONS.map(r => ({ p: `en/tides/${r}/index.html`, active: 'EN' }))
+  ];
+  for (const { p, active } of all) {
+    const html = read(p);
+    assert(html.includes('class="lang-switch"'), `${p}: no lang switch`);
+    assert(html.includes('lang-sep">|</span>'), `${p}: switch is not "PT | EN"`);
+    assert(html.includes(`lang-active" aria-current="true">${active}<`), `${p}: ${active} not highlighted`);
+    const inactive = active === 'PT' ? 'EN' : 'PT';
+    assert(html.includes(`>${inactive}</a>`), `${p}: ${inactive} is not a link`);
+  }
+});
+
 // JSON-LD parses on every page
 test('JSON-LD parses on all generated pages', () => {
   const all = ['index.html', 'en/index.html',

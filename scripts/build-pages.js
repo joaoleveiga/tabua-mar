@@ -35,6 +35,18 @@ const escapeHtml = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
 
 const pad = n => String(n).padStart(2, '0');
 
+// Language switch: always "PT | EN", current language highlighted and disabled.
+function langSwitch(lang, ptUrl, enUrl) {
+  const ptActive = lang.key === 'pt_PT';
+  const ptLink = ptActive
+    ? '<span class="lang-active" aria-current="true">PT</span>'
+    : `<a hreflang="pt-PT" href="${ptUrl}">PT</a>`;
+  const enLink = ptActive
+    ? `<a hreflang="en-GB" href="${enUrl}">EN</a>`
+    : '<span class="lang-active" aria-current="true">EN</span>';
+  return `<p class="lang-switch">${ptLink} <span class="lang-sep">|</span> ${enLink}</p>`;
+}
+
 // Localized display label for a region ("Marés do Norte" / "Norte Tides").
 function regionDisplay(langKey, regionKey, t) {
   const table = T[langKey].region_display;
@@ -117,7 +129,8 @@ function regionPage(lang, key, location, days, otherLocs) {
     <a href="#main-content" class="skip-link">${escapeHtml(t('skip_link'))}</a>
     <div class="container">
         <header>
-            <p class="lang-switch"><a href="${altUrl}">${escapeHtml(t('other_language'))}</a> | <a href="/tabua-mar/${lang.dir ? lang.dir + '/' : ''}">${escapeHtml(t('back_home'))}</a></p>
+            ${langSwitch(lang, `${SITE}/mares/${SLUGS[key]}/`, `${SITE}/en/tides/${SLUGS[key]}/`)}
+            <p class="back-link"><a href="/tabua-mar/${lang.dir ? lang.dir + '/' : ''}">${escapeHtml(t('back_home'))}</a></p>
             <h1>${escapeHtml(t('region_h1').replace('{region}', regionDisplay(lang.key, key, t)))} <span class="ref-port">(${escapeHtml(t('region_ref_port'))}: ${escapeHtml(location.referencePort)})</span></h1>
             <p class="intro">${escapeHtml(t('region_intro').replace('{region}', regionDisplay(lang.key, key, t)).replace('{port}', location.referencePort))}</p>
         </header>
@@ -228,7 +241,7 @@ function homePage(lang) {
     <a href="#main-content" class="skip-link">${escapeHtml(t('skip_link'))}</a>
     <div class="container">
         <header>
-            <p class="lang-switch"><a hreflang="${alt.code}" href="${altUrl}">${escapeHtml(t('other_language'))}</a></p>
+            ${langSwitch(lang, `${SITE}/`, `${SITE}/en/`)}
             <h1><span class="wave-emoji" aria-label="Wave">🌊</span> ${escapeHtml(t('title'))} - ${escapeHtml(t('subtitle'))}</h1>
         </header>
         <main id="main-content">

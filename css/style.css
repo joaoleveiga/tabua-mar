@@ -412,3 +412,16 @@ input:focus {
 #intro h2 {
   font-size: 1.1em;
 }
+
+.lang-switch {
+  font-size: 0.9em;
+}
+
+.lang-sep {
+  color: #888;
+}
+
+.lang-active {
+  font-weight: bold;
+  color: inherit;
+}
